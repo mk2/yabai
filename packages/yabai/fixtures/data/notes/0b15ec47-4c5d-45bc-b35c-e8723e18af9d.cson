@@ -1,0 +1,28 @@
+createdAt: '2019-08-28T08:54:55.598Z'
+updatedAt: '2020-01-20T14:59:24.415Z'
+type: 'MARKDOWN_NOTE'
+folder: '08842826ad13a2a00200'
+title: 'Jetbrains系IDEで、fishをIDE内でTerminalとして開いたときにエラーが出る場合'
+tags: [
+  'Webstorm'
+  'Jetbrains'
+  'fish'
+]
+content: '''
+  # Jetbrains系IDEで、fishをIDE内でTerminalとして開いたときにエラーが出る場合
+  
+  [IntelliJ 組み込みterminalでfish-shellを使う - 今日のつちや](https://blog.corocn.jp/entry/2018/05/06/011547)
+  
+  - IDEが用意しているfishの設定をまるっと入れ替える
+  - Shell Integrationを外す手もあるが、terminalの表示の書き換えなどがおかしくなるっぽいので、お勧めできない
+  
+  ```sh
+  cd /Applications/IntelliJ\\ IDEA.app/Contents/plugins/terminal/
+  mv fish bak.fish
+  ln -s ~/.config/fish fish
+  ```
+'''
+linesHighlighted: []
+isStarred: false
+isTrashed: false
+id: '0b15ec47-4c5d-45bc-b35c-e8723e18af9d.cson'

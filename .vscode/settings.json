@@ -5,10 +5,7 @@
     "source.fixAll": false,
     "source.fixAll.eslint": true
   },
-  "eslint.validate": [
-    "javascript",
-    "typescript"
-  ],
+  "eslint.validate": ["javascript", "typescript"],
   "eslint.packageManager": "yarn",
   "eslint.workingDirectories": [
     {
@@ -17,6 +14,10 @@
     },
     {
       "directory": "./packages/blessed",
+      "changeProcessCWD": true
+    },
+    {
+      "directory": "./packages/@types/blessed",
       "changeProcessCWD": true
     }
   ]

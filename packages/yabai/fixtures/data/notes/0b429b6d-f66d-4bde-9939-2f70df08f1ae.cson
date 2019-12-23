@@ -1,0 +1,158 @@
+createdAt: '2019-03-29T07:53:57.036Z'
+updatedAt: '2020-01-20T14:53:01.356Z'
+type: 'MARKDOWN_NOTE'
+folder: '08842826ad13a2a00200'
+title: 'GASで通知用の簡単なbotを作る例'
+tags: [
+  'GAS'
+]
+content: '''
+  GASで通知用の簡単なbotを作る例
+  
+  - `ScriptApp.newTrigger(...).timeBased().at(...).create()`じゃないと正確な時刻に起動できない
+  - 普通にGASのトリガーのみだと、ずれまくる
+  
+  ```js
+  var testWebhookUrl = "https://idobata.io/hook/custom/1fcff99b-a8bd-4bfe-85d6-56b4399c1c1e";
+  var webhookUrl = "https://idobata.io/hook/custom/339a15f0-4ffa-4a91-b095-0906ec40c590";
+  
+  function h1(str) {
+    return "<h1>" + str + "</h1>";
+  }
+  
+  // 月〜金のみ起動する
+  function setTriggers() {
+    triggers.forEach(function(trigger) {
+      var triggerDay = new Date();
+      triggerDay.setHours(trigger.hours);
+      triggerDay.setMinutes(trigger.minutes);
+      ScriptApp.newTrigger(trigger.func).timeBased().at(triggerDay).create();
+    })
+  }
+  
+  function deleteTrigger(func) {
+    var triggers = ScriptApp.getProjectTriggers();
+    for(var i=0; i < triggers.length; i++) {
+      if (triggers[i].getHandlerFunction() == func) {
+        ScriptApp.deleteTrigger(triggers[i]);
+      }
+    }
+  }
+  
+  var triggers = [
+    {
+      hours: 12,
+      minutes: 30,
+      func: "time_1200_1300"
+    },
+    {
+      hours: 14,
+      minutes: 55,
+      func: "time_TS"
+    },
+    {
+      hours: 15,
+      minutes: 30,
+      func: "time_1500_1600"
+    },
+    {
+      hours: 18,
+      minutes: 00,
+      func: "time_1800_1900"
+    },
+    {
+      hours: 19,
+      minutes: 30,
+      func: "time_1900_2000"
+    },
+    {
+      hours: 9,
+      minutes: 57,
+      func: "time_asakai"
+    },
+    {
+      hours: 9,
+      minutes: 55,
+      func: "time_retrospective"
+    }
+  ];
+  
+  function notify(message) {
+    message = message || h1("ボーっと生きてんじゃねーよ！");
+    var payload = {
+      format: "html",
+      source: message,
+    };
+    var options = {
+      method: "post",
+      payload: payload
+    };
+    UrlFetchApp.fetch(webhookUrl, options)
+  }
+  
+  function now() {
+    var n = luxon.DateTime.utc().setZone('UTC+9');
+    Logger.log(n.toISO());
+    var hour = "h" + n.toFormat("HH");
+    var dow = n.toFormat("c");
+    return {
+      hour: hour,
+      dow: dow
+    };
+  }
+  
+  // 以下、トリガーで起動するハンドラー
+  
+  function time_1200_1300() {
+    notify(h1("ねぇねぇ、午前中はどうだった？"));
+    deleteTrigger("time_1200_1300");
+  }
+  
+  // 月曜日のTS勉強会用
+  function time_TS() {
+    var n = now();
+    if (n.dow == 1) { // 月曜日判定
+      notify(h1("@here そろそろTS勉強会じゃい！！！！！"));
+    }
+    deleteTrigger("time_TS");
+  }
+  
+  function time_1500_1600() {
+    var n = now();
+    if (n.dow != 1) { // 月曜日以外判定
+      notify(h1("ねぇねぇ、みんな〜、そろそろ休憩しない？"));
+    }
+    deleteTrigger("time_1500_1600");
+  }
+  
+  function time_1800_1900() {
+    notify(h1("ねぇねぇ、帰る前に何をやったか教えて？"));
+    deleteTrigger("time_1800_1900");
+  }
+  
+  function time_1900_2000() {
+    notify("チコ、そろそろ眠いから帰るね…");
+    deleteTrigger("time_1900_2000");
+  }
+  
+  function time_asakai() {
+    var n = now();
+    if (n.dow != 3) { // 水曜日以外判定
+      notify("@here ねぇねぇ、そろそろ朝会が始まるんだけど。");
+      deleteTrigger("time_asakai");
+    }
+  }
+  
+  function time_retrospective() {
+    var n = now();
+    if (n.dow == 3) { // 水曜日判定
+      notify("@here ねぇねぇ、そろそろふりかえりとスプリント計画が始まるんだけど。");
+      deleteTrigger("time_retrospective");
+    }
+  }
+  ```
+'''
+linesHighlighted: []
+isStarred: false
+isTrashed: false
+id: '0b429b6d-f66d-4bde-9939-2f70df08f1ae.cson'

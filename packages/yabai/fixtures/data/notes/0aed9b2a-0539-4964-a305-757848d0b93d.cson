@@ -1,0 +1,18 @@
+createdAt: "2019-07-09T04:46:01.381Z"
+updatedAt: "2019-08-22T03:06:12.740Z"
+type: "MARKDOWN_NOTE"
+folder: "90c5ab606819a029179c"
+title: "Detoxのざっくりメモ"
+tags: [
+  "Detox"
+  "ReactNative"
+]
+content: '''
+  # Detoxのざっくりメモ
+  
+  - expectは、Detox独自のものを使っている
+  - [Detox/Detox.js at 5ecec74910b7704c5f1f6ded6ac1e114267b7d45 · wix/Detox · GitHub](https://github.com/wix/Detox/blob/5ecec74910b7704c5f1f6ded6ac1e114267b7d45/detox/src/Detox.js#L75) ここで各プラットフォーム向けのマッチャー（IosExpectなど）をグローバル空間に展開している→テストファイルから使用できるｓ
+'''
+linesHighlighted: []
+isStarred: false
+isTrashed: false
