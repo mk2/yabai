@@ -1,16 +1,7 @@
-import blessed from 'blessed';
-import TextEditor from '@/components/TextEditor';
+import App from '@/App';
 
-const screen = blessed.screen({
-  smartCSR: true,
-});
-
-screen.title = 'bce';
-
-const editor = new TextEditor(screen);
-
-screen.key(['escape', 'q', 'C-c'], function(ch, key) {
-  return process.exit(0);
-});
-
-screen.render();
+(async function() {
+  const app = new App();
+  await app.init();
+  app.start();
+})();

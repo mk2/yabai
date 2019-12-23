@@ -3,7 +3,10 @@
   "description": "Yet Another BoostNote Application Implementation",
   "private": true,
   "workspaces": [
-    "packages/bce",
+    "packages/yabai",
     "packages/blessed"
-  ]
+  ],
+  "scripts": {
+    "prepare-dist": "node ./scripts/prepare-dist.js"
+  }
 }

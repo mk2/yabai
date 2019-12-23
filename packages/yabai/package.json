@@ -1,7 +1,6 @@
 {
   "name": "yabai",
-  "version": "1.0.0",
-  "main": "./src/main.js",
+  "version": "0.0.3",
   "repository": "git@github.com:mk2/yabai.git",
   "bin": {
     "yabai": "./yabai.js"
@@ -11,17 +10,23 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "yarn type-check -- --watch",
+    "run": "node lib/main.js",
     "build": "run-s clean:js build:js",
     "build:types": "tsc --emitDeclarationOnly",
     "clean:js": "rimraf lib dist",
+    "clean:log": "rimraf yabai.log",
     "build:js": "babel src --out-dir lib --extensions \".ts,.js\" --source-maps inline",
     "bundle": "run-s build bundle:js",
-    "bundle:js": "webpack"
+    "bundle:js": "webpack",
+    "dev": "run-s clean:log build run"
   },
   "dependencies": {
     "blessed": "*",
+    "cson-parser": "https://github.com/mk2/cson-parser.git#master",
+    "luxon": "^1.21.3",
     "mobx": "^5.15.1",
     "node-pty": "^0.9.0",
+    "pino": "^5.15.0",
     "term.js": "^0.0.7",
     "text-buffer": "^13.17.2"
   },
@@ -29,11 +34,17 @@
     "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",
     "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-decorators": "^7.7.4",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.7.4",
     "@babel/plugin-proposal-numeric-separator": "^7.7.4",
     "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
+    "@babel/plugin-proposal-optional-chaining": "^7.7.5",
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-typescript": "^7.7.7",
     "@types/blessed": "^0.1.15",
+    "@types/cson": "^0.0.31",
+    "@types/luxon": "^1.21.0",
+    "@types/pino": "^5.15.0",
     "@types/text-buffer": "^13.0.4",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
     "@typescript-eslint/parser": "^2.12.0",
@@ -48,12 +59,14 @@
     "null-loader": "^3.0.0",
     "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
+    "shebang-loader": "^0.0.1",
+    "terser-webpack-plugin": "^2.3.1",
     "typescript": "3.7.4",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10"
   },
   "importSort": {
-    ".js, .jsx, .ts, .tsx": {
+    ".js, .ts": {
       "style": "module",
       "parser": "typescript"
     }

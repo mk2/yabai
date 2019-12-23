@@ -1,12 +1,12 @@
 import blessed from 'blessed';
-import TextBufferAdaptor from '@/adaptors/TextBufferAdaptor';
+import TextBuffer from 'text-buffer';
 
 export default class TextEditor {
-  textBuf: TextBufferAdaptor;
+  textBuf: TextBuffer.TextBuffer;
   textView: blessed.Widgets.BoxElement;
 
   constructor(parent: blessed.Widgets.Screen) {
-    this.textBuf = new TextBufferAdaptor();
+    this.textBuf = new TextBuffer();
     this.textView = blessed.box({
       parent,
       top: 0,
@@ -14,6 +14,6 @@ export default class TextEditor {
       right: 0,
       bottom: 0,
     });
-    this.textView.setContent('hoge');
+    this.textView.setContent('日本語');
   }
 }
