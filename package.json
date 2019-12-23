@@ -1,0 +1,9 @@
+{
+  "name": "yabai",
+  "description": "Yet Another BoostNote Application Implementation",
+  "private": true,
+  "workspaces": [
+    "packages/bce",
+    "packages/blessed"
+  ]
+}

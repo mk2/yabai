@@ -1,0 +1,61 @@
+{
+  "name": "yabai",
+  "version": "1.0.0",
+  "main": "./src/main.js",
+  "repository": "git@github.com:mk2/yabai.git",
+  "bin": {
+    "yabai": "./yabai.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "yarn type-check -- --watch",
+    "build": "run-s clean:js build:js",
+    "build:types": "tsc --emitDeclarationOnly",
+    "clean:js": "rimraf lib dist",
+    "build:js": "babel src --out-dir lib --extensions \".ts,.js\" --source-maps inline",
+    "bundle": "run-s build bundle:js",
+    "bundle:js": "webpack"
+  },
+  "dependencies": {
+    "blessed": "*",
+    "mobx": "^5.15.1",
+    "node-pty": "^0.9.0",
+    "term.js": "^0.0.7",
+    "text-buffer": "^13.17.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-numeric-separator": "^7.7.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-typescript": "^7.7.7",
+    "@types/blessed": "^0.1.15",
+    "@types/text-buffer": "^13.0.4",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-jest": "^23.1.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^24.9.0",
+    "node-loader": "^0.6.0",
+    "npm-run-all": "^4.1.5",
+    "null-loader": "^3.0.0",
+    "prettier": "^1.19.1",
+    "rimraf": "^3.0.0",
+    "typescript": "3.7.4",
+    "webpack": "^4.41.4",
+    "webpack-cli": "^3.3.10"
+  },
+  "importSort": {
+    ".js, .jsx, .ts, .tsx": {
+      "style": "module",
+      "parser": "typescript"
+    }
+  }
+}
