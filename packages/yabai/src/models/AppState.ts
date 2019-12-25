@@ -42,6 +42,9 @@ export default class AppState {
   @observable
   currentDocument?: Document;
 
+  @observable
+  isInitialized = false;
+
   loadDataDirPath() {
     this.dataDirPath = path.resolve(process.env.BOOSTNOTE_DATA_DIRECTORY ?? '');
   }
@@ -73,7 +76,7 @@ export default class AppState {
       await this.loadFolders();
       await this.loadDocuments();
       this.currentFolder = this.folders?.[0];
-      this.logger.info(JSON.stringify(this.documents));
+      this.isInitialized = true;
     } catch (e) {
       this.logger.error(`Error: ${e.toString()}`);
     }
