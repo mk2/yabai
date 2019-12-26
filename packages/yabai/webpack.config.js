@@ -8,12 +8,14 @@ module.exports = {
   entry: './lib/main.js',
   optimization: {
     minimize: true,
-    minimizer: [new TerserPlugin({
-      terserOptions: {
-        mangle: false,
-      },
-      extractComments: false,
-    })],
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          mangle: false,
+        },
+        extractComments: false,
+      }),
+    ],
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
