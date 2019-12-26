@@ -1,19 +1,19 @@
-import blessed from 'blessed';
-import TextEditor from '@/components/text-editor/TextEditor';
-import AppState from '@/models/AppState';
 import LoggerAdaptor from '@/adaptors/LoggerAdaptor';
 import NoteTree from '@/components/note-tree/NoteTree';
+import TextEditor from '@/components/text-editor/TextEditor';
+import AppState from '@/models/AppStore';
+import blessed from 'blessed';
+
+export const store = new AppState();
 
 export default class App {
   private logger = LoggerAdaptor.getLogger({ module: 'App' });
   private rootScreen: blessed.Widgets.Screen;
-  private state: AppState;
 
   private noteTree?: NoteTree;
   private textEditor?: TextEditor;
 
   constructor() {
-    this.state = new AppState();
     this.rootScreen = blessed.screen({
       smartCSR: true,
       fullUnicode: true,
@@ -22,7 +22,7 @@ export default class App {
 
   async init() {
     this.rootScreen.title = 'bce';
-    this.state.init();
+    store.init();
 
     this.noteTree = new NoteTree(this.rootScreen, {
       top: 0,
