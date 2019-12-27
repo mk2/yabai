@@ -1,9 +1,10 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
-import LoggerAdapter from '@/adaptors/LoggerAdaptor';
 import CSON from 'cson-parser';
 import { action, computed, observable } from 'mobx';
+
+import Model from './Model';
 
 type Folder = {
   key: string;
@@ -25,9 +26,7 @@ type Document = {
   isTrashed: boolean;
 };
 
-export default class AppStore {
-  private logger = LoggerAdapter.getLogger({ module: 'AppStore' });
-
+export default class AppStore extends Model {
   @observable
   dataDirPath?: string;
 
