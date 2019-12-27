@@ -17,8 +17,14 @@ rimraf.sync(path.resolve(rootDir, 'packages/publish'));
 fs.mkdirSync(path.resolve(rootDir, 'packages/publish'));
 
 // copy need files
-fs.copyFileSync(path.resolve(rootDir, 'packages/yabai/dist/yabai.js'), path.resolve(rootDir, 'packages/publish/yabai.js'));
-fs.copyFileSync(path.resolve(rootDir, 'packages/yabai/package.json'), path.resolve(rootDir, 'packages/publish/package.json'));
+fs.copyFileSync(
+  path.resolve(rootDir, 'packages/yabai/dist/yabai.js'),
+  path.resolve(rootDir, 'packages/publish/yabai.js'),
+);
+fs.copyFileSync(
+  path.resolve(rootDir, 'packages/yabai/package.json'),
+  path.resolve(rootDir, 'packages/publish/package.json'),
+);
 fs.copyFileSync(path.resolve(rootDir, 'README.md'), path.resolve(rootDir, 'packages/publish/README.md'));
 
 // edit package.json
