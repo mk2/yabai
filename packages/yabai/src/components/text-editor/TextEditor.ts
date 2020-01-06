@@ -1,18 +1,41 @@
+import LoggerAdaptor from '@/adaptors/LoggerAdaptor';
+import { store } from '@/App';
 import blessed from 'blessed';
+import { reaction } from 'mobx';
 import TextBuffer from 'text-buffer';
+import { SetRequired } from 'type-fest';
 
-type TextEditorOptions = blessed.Widgets.BoxOptions;
+type TextEditorOptions = SetRequired<blessed.Widgets.BoxOptions, 'parent'>;
 
 export default class TextEditor {
+  get logger() {
+    return LoggerAdaptor.getLogger({ module: this.constructor.name });
+  }
   textBuf: TextBuffer.TextBuffer;
   textView: blessed.Widgets.BoxElement;
 
-  constructor(parent: blessed.Widgets.Screen, options?: TextEditorOptions) {
+  constructor(options: TextEditorOptions) {
     this.textBuf = new TextBuffer();
     this.textView = blessed.box({
       ...options,
-      parent,
     });
-    this.textView.setContent('日本語');
+    this.textView.setContent(options?.content || '');
+
+    reaction(
+      () => store.isInitialized,
+      () => {
+        this.logger.info(store.currentDocument.content);
+        this.textView.setContent(store.currentDocument.content);
+        this.textView.screen.render();
+      },
+    );
+  }
+
+  show() {
+    this.textView.show();
+  }
+
+  hide() {
+    this.textView.hide();
   }
 }

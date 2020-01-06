@@ -21,8 +21,10 @@
     "dev": "run-s clean:log build run"
   },
   "dependencies": {
+    "autobind-decorator": "^2.4.0",
     "blessed": "*",
     "cson-parser": "https://github.com/mk2/cson-parser.git#master",
+    "lodash-es": "^4.17.15",
     "luxon": "^1.21.3",
     "mobx": "^5.15.1",
     "node-pty": "^0.9.0",
@@ -43,6 +45,7 @@
     "@babel/preset-typescript": "^7.7.7",
     "@types/blessed": "^0.1.15",
     "@types/cson": "^0.0.31",
+    "@types/lodash-es": "^4.17.3",
     "@types/luxon": "^1.21.0",
     "@types/pino": "^5.15.0",
     "@types/text-buffer": "^13.0.4",
@@ -51,6 +54,7 @@
     "null-loader": "^3.0.0",
     "rimraf": "^3.0.0",
     "terser-webpack-plugin": "^2.3.1",
+    "type-fest": "^0.8.1",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10"
   }

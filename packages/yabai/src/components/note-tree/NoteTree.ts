@@ -2,26 +2,54 @@ import LoggerAdaptor from '@/adaptors/LoggerAdaptor';
 import { store } from '@/App';
 import blessed from 'blessed';
 import { reaction } from 'mobx';
+import { SetRequired } from 'type-fest';
 
-type NoteTreeOptions = blessed.Widgets.ListOptions<any>;
+type NoteTreeOptions = SetRequired<blessed.Widgets.ListOptions<any>, 'parent'>;
+
+const defaultNoteListOption: Partial<NoteTreeOptions> = {
+  keys: true,
+  mouse: false,
+  scrollbar: {
+    ch: ' ',
+    track: {
+      bg: 'cyan',
+    },
+    style: {
+      inverse: true,
+    },
+  },
+  style: {
+    item: {
+      hover: {
+        bg: 'blue',
+      },
+    },
+    selected: {
+      bg: 'blue',
+      bold: true,
+    },
+  },
+};
 export default class NoteTree {
   private logger = LoggerAdaptor.getLogger({ module: 'NoteTree' });
   private noteList: blessed.Widgets.ListElement;
 
-  constructor(parent: blessed.Widgets.Screen, options?: NoteTreeOptions) {
+  constructor(options: NoteTreeOptions) {
     this.noteList = blessed.list({
+      ...defaultNoteListOption,
       ...options,
-      parent,
     });
     reaction(
-      () => store.folders,
+      () => store.isInitialized,
       () => {
-        store.folders.forEach(folder => {
-          this.noteList.addItem(folder.name);
-          this.logger.info(folder.name);
-        });
+        this.noteList.setItems(store.currentFolderDocuments.map(({ document }) => document.title) as any[]);
+        this.noteList.select(0);
         this.noteList.screen.render();
       },
     );
+  }
+
+  focus() {
+    this.noteList.focus();
   }
 }

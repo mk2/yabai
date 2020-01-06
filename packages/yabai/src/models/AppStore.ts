@@ -4,6 +4,7 @@ import path from 'path';
 import CSON from 'cson-parser';
 import { action, computed, observable } from 'mobx';
 
+import Config from './Config';
 import Model from './Model';
 
 type Folder = {
@@ -36,11 +37,29 @@ export default class AppStore extends Model {
   @observable
   currentFolderIndex = 0;
 
+  @computed
+  get currentFolder(): Folder | undefined {
+    return this.folders?.[this.currentFolderIndex];
+  }
+
   @observable
   documents: Document[] = [];
 
   @observable
   currentDocumentIndex = 0;
+
+  @computed
+  get currentDocument(): Document | undefined {
+    return this.documents?.[this.currentDocumentIndex];
+  }
+
+  @computed
+  get currentFolderDocuments(): { document: Document; index: number }[] {
+    const currentFolder = this.currentFolder;
+    return this.documents
+      .map((d, i) => ({ document: d, index: i }))
+      .filter(({ document }) => !document.isTrashed && document.folder === currentFolder?.key);
+  }
 
   @observable
   isInitialized = false;
@@ -79,7 +98,8 @@ export default class AppStore extends Model {
       this.loadDataDirPath();
       await this.loadFolders();
       await this.loadDocuments();
-      this.currentFolder = this.folders?.[0];
+      this.currentFolderIndex = 0;
+      this.currentDocumentIndex = this.currentFolderDocuments[0]?.index;
       this.isInitialized = true;
     } catch (e) {
       this.logger.error(`Error: ${e.toString()}`);
