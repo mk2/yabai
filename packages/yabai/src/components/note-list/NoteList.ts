@@ -6,9 +6,9 @@ import { observable, reaction } from 'mobx';
 import { action } from 'mobx';
 import { SetRequired } from 'type-fest';
 
-type NoteTreeOptions = SetRequired<blessed.Widgets.ListOptions<any>, 'parent'>;
+type NoteListOptions = SetRequired<blessed.Widgets.ListOptions<any>, 'parent'>;
 
-const defaultNoteListOption: Partial<NoteTreeOptions> = {
+const defaultNoteListOption: Partial<NoteListOptions> = {
   keys: true,
   mouse: false,
   scrollbar: {
@@ -32,13 +32,13 @@ const defaultNoteListOption: Partial<NoteTreeOptions> = {
     },
   },
 };
-export default class NoteTree {
-  private logger = LoggerAdaptor.getLogger({ module: 'NoteTree' });
+export default class NoteList {
+  private logger = LoggerAdaptor.getLogger({ module: 'NoteList' });
   private noteList: blessed.Widgets.ListElement;
   @observable
   private currentShowDocumentIndex = 0;
 
-  constructor(options: NoteTreeOptions) {
+  constructor(options: NoteListOptions) {
     this.noteList = blessed.list({
       ...defaultNoteListOption,
       ...options,

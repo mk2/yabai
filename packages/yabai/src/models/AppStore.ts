@@ -4,7 +4,6 @@ import path from 'path';
 import CSON from 'cson-parser';
 import { action, computed, observable } from 'mobx';
 
-import Config from './Config';
 import Model from './Model';
 
 type Folder = {

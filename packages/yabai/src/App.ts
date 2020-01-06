@@ -1,5 +1,5 @@
 import LoggerAdaptor from '@/adaptors/LoggerAdaptor';
-import NoteTree from '@/components/note-tree/NoteTree';
+import NoteList from '@/components/note-list/NoteList';
 import TextEditor from '@/components/text-editor/TextEditor';
 import AppState from '@/models/AppStore';
 import blessed from 'blessed';
@@ -11,7 +11,7 @@ export default class App {
   private rootScreen: blessed.Widgets.Screen;
   private program: blessed.BlessedProgram;
 
-  private noteTree?: NoteTree;
+  private noteList?: NoteList;
   private textEditor?: TextEditor;
   private textPreview?: TextEditor;
 
@@ -28,7 +28,7 @@ export default class App {
   async init() {
     this.rootScreen.title = 'bce';
 
-    this.noteTree = new NoteTree({
+    this.noteList = new NoteList({
       parent: this.rootScreen,
       top: 0,
       bottom: 0,
@@ -42,7 +42,6 @@ export default class App {
       bottom: 0,
       left: 21,
       right: 0,
-      content: 'エディター',
     });
     this.textPreview = new TextEditor({
       parent: this.rootScreen,
@@ -63,7 +62,7 @@ export default class App {
       this.textPreview?.show();
       this.rootScreen.render();
     });
-    this.noteTree.focus();
+    this.noteList.focus();
 
     store.init();
   }
