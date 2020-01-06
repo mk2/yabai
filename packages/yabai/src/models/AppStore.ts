@@ -46,19 +46,19 @@ export default class AppStore extends Model {
   documents: Document[] = [];
 
   @observable
-  currentDocumentIndex = 0;
+  currentDocumentId: string | undefined;
 
   @computed
   get currentDocument(): Document | undefined {
-    return this.documents?.[this.currentDocumentIndex];
+    return this.documents?.find(document => document.id === this.currentDocumentId);
   }
 
   @computed
   get currentFolderDocuments(): { document: Document; index: number }[] {
     const currentFolder = this.currentFolder;
     return this.documents
-      .map((d, i) => ({ document: d, index: i }))
-      .filter(({ document }) => !document.isTrashed && document.folder === currentFolder?.key);
+      .filter(document => !document.isTrashed && document.folder === currentFolder?.key)
+      .map((d, i) => ({ document: d, index: i }));
   }
 
   @observable
@@ -99,7 +99,7 @@ export default class AppStore extends Model {
       await this.loadFolders();
       await this.loadDocuments();
       this.currentFolderIndex = 0;
-      this.currentDocumentIndex = this.currentFolderDocuments[0]?.index;
+      this.currentDocumentId = this.currentFolderDocuments[0]?.document.id;
       this.isInitialized = true;
     } catch (e) {
       this.logger.error(`Error: ${e.toString()}`);

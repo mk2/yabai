@@ -23,11 +23,11 @@ export default class TextEditor {
 
     reaction(
       () => store.isInitialized,
-      () => {
-        this.logger.info(store.currentDocument.content);
-        this.textView.setContent(store.currentDocument.content);
-        this.textView.screen.render();
-      },
+      () => this.setContent(),
+    );
+    reaction(
+      () => store.currentDocument,
+      () => this.setContent(),
     );
   }
 
@@ -37,5 +37,10 @@ export default class TextEditor {
 
   hide() {
     this.textView.hide();
+  }
+
+  setContent() {
+    this.textView.setContent(store.currentDocument?.content || '');
+    this.textView.screen.render();
   }
 }
