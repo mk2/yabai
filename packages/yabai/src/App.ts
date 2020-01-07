@@ -2,6 +2,7 @@ import NoteList from '@/components/note-list/NoteList';
 import TextEditor from '@/components/text-editor/TextEditor';
 import applyMixins from '@/helpers/applyMixins';
 import AppState from '@/models/AppStore';
+import Config from '@/models/Config';
 import Loggable from '@/traits/Loggable';
 import blessed from 'blessed';
 
@@ -12,6 +13,7 @@ interface App extends Loggable {}
 class App {
   private rootScreen: blessed.Widgets.Screen;
   private program: blessed.BlessedProgram;
+  private config: Config;
 
   private noteList?: NoteList;
   private textEditor?: TextEditor;
@@ -25,9 +27,11 @@ class App {
       smartCSR: true,
       fullUnicode: true,
     });
+    this.config = new Config();
   }
 
   async init() {
+    await this.config.init();
     this.rootScreen.title = 'bce';
 
     this.noteList = new NoteList({

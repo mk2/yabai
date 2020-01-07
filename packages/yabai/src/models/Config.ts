@@ -5,22 +5,55 @@ import path from 'path';
 import applyMixins from '@/helpers/applyMixins';
 import Loggable from '@/traits/Loggable';
 
+type ConfigContents = {};
+
+const kDefaultConfig: Partial<ConfigContents> = Object.freeze({});
+
 interface Config extends Loggable {}
 
 class Config {
-  private yabaiConfigDir = path.resolve(os.homedir(), '.yabai');
-  private yabaiConfig = path.resolve(os.homedir(), '.yabai', 'config.json');
+  private configContents: ConfigContents;
+
+  private get configDirPath() {
+    return path.resolve(os.homedir(), '.yabai');
+  }
+  private get configJsonPath() {
+    return path.resolve(this.configDirPath, 'config.json');
+  }
+
+  constructor() {
+    this.configContents = {};
+  }
+
+  async loadConfig(): Promise<ConfigContents> {
+    const configJson = JSON.parse(await fs.readFile(this.configJsonPath, 'utf-8'));
+    return {
+      ...kDefaultConfig,
+      ...configJson,
+      ...this.configContents,
+    };
+  }
+
+  async saveConfig() {
+    await fs.writeFile(
+      this.configJsonPath,
+      JSON.stringify({
+        ...kDefaultConfig,
+        ...this.configContents,
+      }),
+    );
+  }
 
   async init() {
     try {
-      await fs.access(this.yabaiConfigDir, fsConstants.R_OK | fsConstants.W_OK);
+      await fs.access(this.configDirPath, fsConstants.R_OK | fsConstants.W_OK);
     } catch (e) {
-      await fs.mkdir(this.yabaiConfigDir);
+      await fs.mkdir(this.configDirPath);
     }
     try {
-      await fs.access(this.yabaiConfig, fsConstants.R_OK | fsConstants.W_OK);
+      await fs.access(this.configJsonPath, fsConstants.R_OK | fsConstants.W_OK);
     } catch (e) {
-      await fs.mkdir(this.yabaiConfig);
+      await fs.writeFile(this.configJsonPath, JSON.stringify(kDefaultConfig, null, 2), { encoding: 'utf-8' });
     }
   }
 }
