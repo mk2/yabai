@@ -6,14 +6,14 @@ import Config from '@/models/Config';
 import Loggable from '@/traits/Loggable';
 import blessed from 'blessed';
 
-export const store = new AppState();
+export const config = new Config();
+export const store = new AppState(config);
 
 interface App extends Loggable {}
 
 class App {
   private rootScreen: blessed.Widgets.Screen;
   private program: blessed.BlessedProgram;
-  private config: Config;
 
   private noteList?: NoteList;
   private textEditor?: TextEditor;
@@ -27,11 +27,10 @@ class App {
       smartCSR: true,
       fullUnicode: true,
     });
-    this.config = new Config();
   }
 
   async init() {
-    await this.config.init();
+    await config.init();
     this.rootScreen.title = 'bce';
 
     this.noteList = new NoteList({

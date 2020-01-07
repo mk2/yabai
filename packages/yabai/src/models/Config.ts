@@ -14,6 +14,18 @@ interface Config extends Loggable {}
 class Config {
   private configContents: ConfigContents;
 
+  get dataDirPath() {
+    return path.resolve(process.env.BOOSTNOTE_DATA_DIRECTORY ?? '');
+  }
+
+  get notesDirPath() {
+    return path.resolve(this.dataDirPath, 'notes');
+  }
+
+  get folderFilePath() {
+    return path.resolve(this.dataDirPath, 'boostnote.json');
+  }
+
   private get configDirPath() {
     return path.resolve(os.homedir(), '.yabai');
   }
@@ -23,6 +35,13 @@ class Config {
 
   constructor() {
     this.configContents = {};
+  }
+
+  setConfig(newConfigContents: Partial<ConfigContents>) {
+    this.configContents = {
+      ...this.configContents,
+      ...newConfigContents,
+    };
   }
 
   async loadConfig(): Promise<ConfigContents> {

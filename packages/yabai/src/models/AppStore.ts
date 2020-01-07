@@ -6,6 +6,8 @@ import Loggable from '@/traits/Loggable';
 import CSON from 'cson-parser';
 import { action, computed, observable } from 'mobx';
 
+import Config from './Config';
+
 type Folder = {
   key: string;
   color: string;
@@ -30,28 +32,35 @@ interface AppStore extends Loggable {}
 
 class AppStore {
   @observable
-  dataDirPath?: string;
+  private folders: Folder[] = [];
 
   @observable
-  folders: Folder[] = [];
+  private documents: Document[] = [];
 
   @observable
-  currentFolderIndex = 0;
+  private currentFolderIndex = 0;
 
   @computed
   get currentFolder(): Folder | undefined {
     return this.folders?.[this.currentFolderIndex];
   }
 
-  @observable
-  documents: Document[] = [];
+  @action.bound
+  setCurrentFolder(currentFolderIndex: number) {
+    this.currentFolderIndex = currentFolderIndex;
+  }
 
   @observable
-  currentDocumentId: string | undefined;
+  private currentDocumentId: string | undefined;
 
   @computed
   get currentDocument(): Document | undefined {
     return this.documents?.find(document => document.id === this.currentDocumentId);
+  }
+
+  @action.bound
+  setCurrentDocument(documentId: string | undefined) {
+    this.currentDocumentId = documentId;
   }
 
   @computed
@@ -65,27 +74,20 @@ class AppStore {
   @observable
   isInitialized = false;
 
-  @action.bound
-  loadDataDirPath() {
-    this.dataDirPath = path.resolve(process.env.BOOSTNOTE_DATA_DIRECTORY ?? '');
-  }
+  constructor(private config: Config) {}
 
   @action.bound
   async loadFolders() {
-    if (!this.dataDirPath) return;
-    this.folders = JSON.parse(
-      await fs.readFile(path.resolve(this.dataDirPath, 'boostnote.json'), { encoding: 'utf8' }),
-    ).folders;
+    this.folders = JSON.parse(await fs.readFile(this.config.folderFilePath, { encoding: 'utf8' })).folders;
   }
 
   @action.bound
   async loadDocuments() {
-    if (!this.dataDirPath) return;
-    const files = await fs.readdir(path.resolve(this.dataDirPath, 'notes'));
+    const files = await fs.readdir(this.config.notesDirPath);
     return Promise.all(
       files.map(async file => {
         const document = CSON.parse(
-          await fs.readFile(path.resolve(this.dataDirPath!, 'notes', file), { encoding: 'utf8' }),
+          await fs.readFile(path.resolve(this.config.notesDirPath, file), { encoding: 'utf8' }),
         );
         document.id = file;
         this.documents?.push(document);
@@ -96,7 +98,6 @@ class AppStore {
   @action.bound
   async init() {
     try {
-      this.loadDataDirPath();
       await this.loadFolders();
       await this.loadDocuments();
       this.currentFolderIndex = 0;

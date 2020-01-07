@@ -82,9 +82,9 @@ class NoteList {
 
   @action.bound
   setCurrentDocument() {
-    store.currentDocumentId = store.currentFolderDocuments.find(
-      ({ index }) => index === this.currentShowDocumentIndex,
-    )?.document.id;
+    store.setCurrentDocument(
+      store.currentFolderDocuments.find(({ index }) => index === this.currentShowDocumentIndex)?.document.id,
+    );
   }
 }
 
