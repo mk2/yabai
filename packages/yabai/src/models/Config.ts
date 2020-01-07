@@ -8,8 +8,8 @@ import Loggable from '@/traits/Loggable';
 interface Config extends Loggable {}
 
 class Config {
-  yabaiConfigDir = path.resolve(os.homedir(), '.yabai');
-  yabaiConfig = path.resolve(os.homedir(), '.yabai', 'config.json');
+  private yabaiConfigDir = path.resolve(os.homedir(), '.yabai');
+  private yabaiConfig = path.resolve(os.homedir(), '.yabai', 'config.json');
 
   async init() {
     try {

@@ -9,7 +9,7 @@ import { SetRequired } from 'type-fest';
 
 type NoteListOptions = SetRequired<blessed.Widgets.ListOptions<any>, 'parent'>;
 
-const defaultNoteListOption: Partial<NoteListOptions> = {
+const kDefaultNoteListOption: Partial<NoteListOptions> = Object.freeze({
   keys: true,
   mouse: false,
   scrollbar: {
@@ -32,9 +32,10 @@ const defaultNoteListOption: Partial<NoteListOptions> = {
       bold: true,
     },
   },
-};
+});
 
 interface NoteList extends Loggable {}
+
 class NoteList {
   private noteList: blessed.Widgets.ListElement;
   @observable
@@ -42,7 +43,7 @@ class NoteList {
 
   constructor(options: NoteListOptions) {
     this.noteList = blessed.list({
-      ...defaultNoteListOption,
+      ...kDefaultNoteListOption,
       ...options,
     });
     this.noteList.key(['up'], this.onUpKeyPressed);
