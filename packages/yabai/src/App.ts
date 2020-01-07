@@ -58,7 +58,7 @@ class App {
     });
     this.textPreview.hide();
 
-    this.rootScreen.key(['escape', 'q', 'C-c'], (ch, key) => {
+    this.rootScreen.key(['escape', 'q', 'C-c'], () => {
       return process.exit(0);
     });
     this.rootScreen.key(['s'], () => {
