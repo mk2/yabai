@@ -75,7 +75,6 @@ class App {
   start() {
     this.rootScreen.render();
     this.logger.info(`Yabai started!`);
-    this.logger.info(this.constructor.name);
   }
 }
 
