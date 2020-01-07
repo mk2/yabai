@@ -1,13 +1,15 @@
-import LoggerAdaptor from '@/adaptors/LoggerAdaptor';
 import NoteList from '@/components/note-list/NoteList';
 import TextEditor from '@/components/text-editor/TextEditor';
+import applyMixins from '@/helpers/applyMixins';
 import AppState from '@/models/AppStore';
+import Loggable from '@/traits/Loggable';
 import blessed from 'blessed';
 
 export const store = new AppState();
 
-export default class App {
-  private logger = LoggerAdaptor.getLogger({ module: 'App' });
+interface App extends Loggable {}
+
+class App {
   private rootScreen: blessed.Widgets.Screen;
   private program: blessed.BlessedProgram;
 
@@ -72,3 +74,7 @@ export default class App {
     this.logger.info(`Yabai started!`);
   }
 }
+
+applyMixins(App, [Loggable]);
+
+export default App;

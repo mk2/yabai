@@ -1,10 +1,10 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
+import applyMixins from '@/helpers/applyMixins';
+import Loggable from '@/traits/Loggable';
 import CSON from 'cson-parser';
 import { action, computed, observable } from 'mobx';
-
-import Model from './Model';
 
 type Folder = {
   key: string;
@@ -26,7 +26,9 @@ type Document = {
   isTrashed: boolean;
 };
 
-export default class AppStore extends Model {
+interface AppStore extends Loggable {}
+
+class AppStore {
   @observable
   dataDirPath?: string;
 
@@ -105,3 +107,7 @@ export default class AppStore extends Model {
     }
   }
 }
+
+applyMixins(AppStore, [Loggable]);
+
+export default AppStore;

@@ -1,5 +1,6 @@
-import LoggerAdaptor from '@/adaptors/LoggerAdaptor';
 import { store } from '@/App';
+import applyMixins from '@/helpers/applyMixins';
+import Loggable from '@/traits/Loggable';
 import blessed from 'blessed';
 import { reaction } from 'mobx';
 import TextBuffer from 'text-buffer';
@@ -7,10 +8,9 @@ import { SetRequired } from 'type-fest';
 
 type TextEditorOptions = SetRequired<blessed.Widgets.BoxOptions, 'parent'>;
 
-export default class TextEditor {
-  get logger() {
-    return LoggerAdaptor.getLogger({ module: this.constructor.name });
-  }
+interface TextEditor extends Loggable {}
+
+class TextEditor {
   textBuf: TextBuffer.TextBuffer;
   textView: blessed.Widgets.BoxElement;
 
@@ -44,3 +44,7 @@ export default class TextEditor {
     this.textView.screen.render();
   }
 }
+
+applyMixins(TextEditor, [Loggable]);
+
+export default TextEditor;

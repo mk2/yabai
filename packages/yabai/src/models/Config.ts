@@ -2,9 +2,12 @@ import { promises as fs, constants as fsConstants } from 'fs';
 import os from 'os';
 import path from 'path';
 
-import Model from './Model';
+import applyMixins from '@/helpers/applyMixins';
+import Loggable from '@/traits/Loggable';
 
-export default class Config extends Model {
+interface Config extends Loggable {}
+
+class Config {
   yabaiConfigDir = path.resolve(os.homedir(), '.yabai');
   yabaiConfig = path.resolve(os.homedir(), '.yabai', 'config.json');
 
@@ -21,3 +24,7 @@ export default class Config extends Model {
     }
   }
 }
+
+applyMixins(Config, [Loggable]);
+
+export default Config;

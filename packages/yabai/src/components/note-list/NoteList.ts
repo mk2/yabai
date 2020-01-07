@@ -1,5 +1,6 @@
-import LoggerAdaptor from '@/adaptors/LoggerAdaptor';
 import { store } from '@/App';
+import applyMixins from '@/helpers/applyMixins';
+import Loggable from '@/traits/Loggable';
 import { boundMethod } from 'autobind-decorator';
 import blessed from 'blessed';
 import { observable, reaction } from 'mobx';
@@ -32,8 +33,9 @@ const defaultNoteListOption: Partial<NoteListOptions> = {
     },
   },
 };
-export default class NoteList {
-  private logger = LoggerAdaptor.getLogger({ module: 'NoteList' });
+
+interface NoteList extends Loggable {}
+class NoteList {
   private noteList: blessed.Widgets.ListElement;
   @observable
   private currentShowDocumentIndex = 0;
@@ -84,3 +86,7 @@ export default class NoteList {
     )?.document.id;
   }
 }
+
+applyMixins(NoteList, [Loggable]);
+
+export default NoteList;
