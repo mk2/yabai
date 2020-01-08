@@ -48,13 +48,14 @@ class NoteList {
     });
     this.noteList.key(['up'], this.onUpKeyPressed);
     this.noteList.key(['down'], this.onDownKeyPressed);
+    this.noteList.key(['f'], this.onFolderKeyPressed);
     reaction(
       () => store.isInitialized,
-      () => {
-        this.noteList.setItems(store.currentFolderDocuments.map(({ document }) => document.title) as any[]);
-        this.noteList.select(this.currentShowDocumentIndex);
-        this.noteList.screen.render();
-      },
+      () => this.reloadItems(),
+    );
+    reaction(
+      () => store.currentFolder,
+      () => this.reloadItems(),
     );
     reaction(
       () => this.currentShowDocumentIndex,
@@ -78,6 +79,18 @@ class NoteList {
     if (this.currentShowDocumentIndex < store.currentFolderDocuments.length - 1) {
       this.currentShowDocumentIndex++;
     }
+  }
+
+  @boundMethod
+  onFolderKeyPressed() {
+    store.setUIState('SELECT_FOLDER');
+  }
+
+  @boundMethod
+  reloadItems() {
+    this.noteList.setItems(store.currentFolderDocuments.map(({ document }) => document.title) as any[]);
+    this.noteList.select(this.currentShowDocumentIndex);
+    this.noteList.screen.render();
   }
 
   @action.bound

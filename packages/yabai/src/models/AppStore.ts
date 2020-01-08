@@ -28,20 +28,31 @@ type Document = {
   isTrashed: boolean;
 };
 
+type UIState = 'SELECT_NOTE' | 'SELECT_FOLDER' | 'EDIT_NOTE';
+
 interface AppStore extends Loggable {}
 
 class AppStore {
   @observable
-  private folders: Folder[] = [];
+  uiState: UIState = 'SELECT_NOTE';
+
+  @action.bound
+  setUIState(uiState: UIState) {
+    this.uiState = uiState;
+  }
 
   @observable
-  private documents: Document[] = [];
+  folders: Folder[] = [];
 
   @observable
-  private currentFolderIndex = 0;
+  documents: Document[] = [];
+
+  @observable
+  currentFolderIndex = 0;
 
   @computed
   get currentFolder(): Folder | undefined {
+    if (this.folders.length <= this.currentFolderIndex) return undefined;
     return this.folders?.[this.currentFolderIndex];
   }
 
@@ -51,7 +62,7 @@ class AppStore {
   }
 
   @observable
-  private currentDocumentId: string | undefined;
+  currentDocumentId: string | undefined;
 
   @computed
   get currentDocument(): Document | undefined {

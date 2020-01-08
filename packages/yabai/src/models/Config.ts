@@ -7,7 +7,7 @@ type ConfigContents = {};
 const kDefaultConfig: Partial<ConfigContents> = Object.freeze({});
 
 class Config {
-  private configContents: ConfigContents;
+  private configContents: ConfigContents = {};
 
   get dataDirPath() {
     return path.resolve(process.env.BOOSTNOTE_DATA_DIRECTORY ?? '');
@@ -39,10 +39,6 @@ class Config {
 
   get cachesDirPath() {
     return path.resolve(this.configDirPath, 'caches');
-  }
-
-  constructor() {
-    this.configContents = {};
   }
 
   setConfig(newConfigContents: Partial<ConfigContents>) {
