@@ -25,16 +25,20 @@ class Config {
     return path.resolve(this.logsDirPath, 'app.log');
   }
 
-  private get configDirPath() {
+  get configDirPath() {
     return path.resolve(os.homedir(), '.yabai');
   }
 
-  private get configJsonPath() {
+  get configJsonPath() {
     return path.resolve(this.configDirPath, 'config.json');
   }
 
-  private get logsDirPath() {
+  get logsDirPath() {
     return path.resolve(this.configDirPath, 'logs');
+  }
+
+  get cachesDirPath() {
+    return path.resolve(this.configDirPath, 'caches');
   }
 
   constructor() {
@@ -68,15 +72,12 @@ class Config {
   }
 
   async init() {
-    try {
-      await fs.access(this.configDirPath, fsConstants.R_OK | fsConstants.W_OK);
-    } catch (e) {
-      await fs.mkdir(this.configDirPath);
-    }
-    try {
-      await fs.access(this.logsDirPath, fsConstants.R_OK | fsConstants.W_OK);
-    } catch (e) {
-      await fs.mkdir(this.logsDirPath);
+    for (const directory of [this.configDirPath, this.logsDirPath, this.cachesDirPath]) {
+      try {
+        await fs.access(directory, fsConstants.R_OK | fsConstants.W_OK);
+      } catch (e) {
+        await fs.mkdir(directory);
+      }
     }
     try {
       await fs.access(this.configJsonPath, fsConstants.R_OK | fsConstants.W_OK);
