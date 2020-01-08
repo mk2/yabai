@@ -6,7 +6,7 @@ import Loggable from '@/traits/Loggable';
 import CSON from 'cson-parser';
 import { action, computed, observable } from 'mobx';
 
-import Config from './Config';
+import { config } from './Config';
 
 type Folder = {
   key: string;
@@ -74,21 +74,17 @@ class AppStore {
   @observable
   isInitialized = false;
 
-  constructor(private config: Config) {}
-
   @action.bound
   async loadFolders() {
-    this.folders = JSON.parse(await fs.readFile(this.config.folderFilePath, { encoding: 'utf8' })).folders;
+    this.folders = JSON.parse(await fs.readFile(config.folderFilePath, { encoding: 'utf8' })).folders;
   }
 
   @action.bound
   async loadDocuments() {
-    const files = await fs.readdir(this.config.notesDirPath);
+    const files = await fs.readdir(config.notesDirPath);
     return Promise.all(
       files.map(async file => {
-        const document = CSON.parse(
-          await fs.readFile(path.resolve(this.config.notesDirPath, file), { encoding: 'utf8' }),
-        );
+        const document = CSON.parse(await fs.readFile(path.resolve(config.notesDirPath, file), { encoding: 'utf8' }));
         document.id = file;
         this.documents?.push(document);
       }),
@@ -110,5 +106,7 @@ class AppStore {
 }
 
 applyMixins(AppStore, [Loggable]);
+
+export const store = new AppStore();
 
 export default AppStore;

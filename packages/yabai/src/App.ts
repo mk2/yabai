@@ -1,13 +1,10 @@
 import NoteList from '@/components/note-list/NoteList';
 import TextEditor from '@/components/text-editor/TextEditor';
 import applyMixins from '@/helpers/applyMixins';
-import AppState from '@/models/AppStore';
-import Config from '@/models/Config';
+import { store } from '@/models/AppStore';
+import { config } from '@/models/Config';
 import Loggable from '@/traits/Loggable';
 import blessed from 'blessed';
-
-export const config = new Config();
-export const store = new AppState(config);
 
 interface App extends Loggable {}
 

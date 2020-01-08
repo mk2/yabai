@@ -79,4 +79,6 @@ class Config {
 
 applyMixins(Config, [Loggable]);
 
+export const config = new Config();
+
 export default Config;

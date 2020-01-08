@@ -1,5 +1,5 @@
-import { store } from '@/App';
 import applyMixins from '@/helpers/applyMixins';
+import { store } from '@/models/AppStore';
 import Loggable from '@/traits/Loggable';
 import { boundMethod } from 'autobind-decorator';
 import blessed from 'blessed';
