@@ -2,14 +2,9 @@ import { promises as fs, constants as fsConstants } from 'fs';
 import os from 'os';
 import path from 'path';
 
-import applyMixins from '@/helpers/applyMixins';
-import Loggable from '@/traits/Loggable';
-
 type ConfigContents = {};
 
 const kDefaultConfig: Partial<ConfigContents> = Object.freeze({});
-
-interface Config extends Loggable {}
 
 class Config {
   private configContents: ConfigContents;
@@ -26,11 +21,20 @@ class Config {
     return path.resolve(this.dataDirPath, 'boostnote.json');
   }
 
+  get appLogFilePath() {
+    return path.resolve(this.logsDirPath, 'app.log');
+  }
+
   private get configDirPath() {
     return path.resolve(os.homedir(), '.yabai');
   }
+
   private get configJsonPath() {
     return path.resolve(this.configDirPath, 'config.json');
+  }
+
+  private get logsDirPath() {
+    return path.resolve(this.configDirPath, 'logs');
   }
 
   constructor() {
@@ -70,14 +74,17 @@ class Config {
       await fs.mkdir(this.configDirPath);
     }
     try {
+      await fs.access(this.logsDirPath, fsConstants.R_OK | fsConstants.W_OK);
+    } catch (e) {
+      await fs.mkdir(this.logsDirPath);
+    }
+    try {
       await fs.access(this.configJsonPath, fsConstants.R_OK | fsConstants.W_OK);
     } catch (e) {
       await fs.writeFile(this.configJsonPath, JSON.stringify(kDefaultConfig, null, 2), { encoding: 'utf-8' });
     }
   }
 }
-
-applyMixins(Config, [Loggable]);
 
 export const config = new Config();
 

@@ -1,7 +1,9 @@
 import pino from 'pino';
 
 type Logger = pino.Logger;
-type LoggerOptions = pino.Bindings;
+type LoggerOptions = pino.Bindings & {
+  destination: string;
+};
 
 export default class LoggerAdaptor {
   private static rootLogger: Logger;
@@ -13,7 +15,7 @@ export default class LoggerAdaptor {
         {
           level: isProduction ? 'info' : 'debug',
         },
-        pino.destination('./yabai.log'),
+        pino.destination(options?.destination),
       );
     }
 
