@@ -1,6 +1,7 @@
 import FolderList from '@/components/folder-list/FolderList';
 import NoteList from '@/components/note-list/NoteList';
 import TextEditor from '@/components/text-editor/TextEditor';
+import TextPreview from '@/components/text-preview/TextPreview';
 import TopBar from '@/components/top-bar/TopBar';
 import applyMixins from '@/helpers/applyMixins';
 import { store } from '@/models/AppStore';
@@ -17,7 +18,7 @@ class App {
 
   private noteList?: NoteList;
   private textEditor?: TextEditor;
-  private textPreview?: TextEditor;
+  private textPreview?: TextPreview;
   private topBar?: TopBar;
   private folderList?: FolderList;
 
@@ -50,15 +51,14 @@ class App {
       right: 0,
       width: '80%',
     });
-    this.textPreview = new TextEditor({
+    this.textEditor.hide();
+    this.textPreview = new TextPreview({
       parent: this.rootScreen,
       top: 1,
       bottom: 0,
       right: 0,
       width: '80%',
-      content: 'プレビュー',
     });
-    this.textPreview.hide();
     this.topBar = new TopBar({
       parent: this.rootScreen,
     });
@@ -85,8 +85,12 @@ class App {
       () => {
         if (store.uiState === 'SELECT_NOTE') {
           this.folderList?.hide();
+          this.textEditor?.hide();
+          this.textPreview?.show();
           this.noteList?.focus();
         } else if (store.uiState === 'SELECT_FOLDER') {
+          this.textEditor?.hide();
+          this.textPreview?.show();
           this.folderList?.focus();
         } else if (store.uiState === 'EDIT_NOTE') {
           this.folderList?.hide();
