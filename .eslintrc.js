@@ -26,6 +26,7 @@ module.exports = {
         ],
         '@typescript-eslint/no-var-requires': 'warn',
         '@typescript-eslint/no-empty-interface': ['error', { allowSingleExtends: true }],
+        '@typescript-eslint/ban-ts-ignore': 'warn',
       },
     },
   ],

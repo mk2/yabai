@@ -4,13 +4,14 @@ import TextEditor from '@/components/text-editor/TextEditor';
 import TextPreview from '@/components/text-preview/TextPreview';
 import TopBar from '@/components/top-bar/TopBar';
 import applyMixins from '@/helpers/applyMixins';
+import reactionMethod from '@/helpers/reactionMethod';
 import { store } from '@/models/AppStore';
 import { config } from '@/models/Config';
 import Loggable from '@/traits/Loggable';
+import Reactable from '@/traits/reactable';
 import blessed from 'blessed';
-import { reaction } from 'mobx';
 
-interface App extends Loggable {}
+interface App extends Loggable, Reactable {}
 
 class App {
   private rootScreen: blessed.Widgets.Screen;
@@ -30,6 +31,7 @@ class App {
       smartCSR: true,
       fullUnicode: true,
     });
+    this.makeReactable();
   }
 
   async init() {
@@ -79,35 +81,33 @@ class App {
     this.noteList.focus();
 
     store.init();
-
-    reaction(
-      () => store.uiState,
-      () => {
-        if (store.uiState === 'SELECT_NOTE') {
-          this.folderList?.hide();
-          this.textEditor?.hide();
-          this.textPreview?.show();
-          this.noteList?.focus();
-        } else if (store.uiState === 'SELECT_FOLDER') {
-          this.textEditor?.hide();
-          this.textPreview?.show();
-          this.folderList?.focus();
-        } else if (store.uiState === 'EDIT_NOTE') {
-          this.folderList?.hide();
-          this.textPreview?.hide();
-          this.textEditor?.show();
-        }
-        this.rootScreen.render();
-      },
-    );
   }
 
   start() {
     this.rootScreen.render();
     this.logger.info(`Yabai started!`);
   }
+
+  @reactionMethod(() => store.uiState)
+  onUIStateChanged() {
+    if (store.uiState === 'SELECT_NOTE') {
+      this.folderList?.hide();
+      this.textEditor?.hide();
+      this.textPreview?.show();
+      this.noteList?.focus();
+    } else if (store.uiState === 'SELECT_FOLDER') {
+      this.textEditor?.hide();
+      this.textPreview?.show();
+      this.folderList?.focus();
+    } else if (store.uiState === 'EDIT_NOTE') {
+      this.folderList?.hide();
+      this.textPreview?.hide();
+      this.textEditor?.show();
+    }
+    this.rootScreen.render();
+  }
 }
 
-applyMixins(App, [Loggable]);
+applyMixins(App, [Loggable, Reactable]);
 
 export default App;
