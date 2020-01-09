@@ -34,21 +34,41 @@ interface AppStore extends LoggableMixin {}
 
 class AppStore {
   @observable
-  uiState: UIState = 'SELECT_NOTE';
+  private _uiState: UIState = 'SELECT_NOTE';
+
+  @computed
+  get uiState() {
+    return this._uiState;
+  }
 
   @action.bound
   setUIState(uiState: UIState) {
-    this.uiState = uiState;
+    this._uiState = uiState;
   }
 
   @observable
-  folders: Folder[] = [];
+  private _folders: Folder[] = [];
+
+  @computed
+  get folders() {
+    return this._folders;
+  }
 
   @observable
-  documents: Document[] = [];
+  private _documents: Document[] = [];
+
+  @computed
+  get documents() {
+    return this._documents;
+  }
 
   @observable
-  currentFolderIndex = 0;
+  private _currentFolderIndex = 0;
+
+  @computed
+  get currentFolderIndex() {
+    return this._currentFolderIndex;
+  }
 
   @computed
   get currentFolder(): Folder | undefined {
@@ -58,11 +78,11 @@ class AppStore {
 
   @action.bound
   setCurrentFolder(currentFolderIndex: number) {
-    this.currentFolderIndex = currentFolderIndex;
+    this._currentFolderIndex = currentFolderIndex;
   }
 
   @observable
-  currentDocumentId: string | undefined;
+  private _currentDocumentId: string | undefined;
 
   @observable
   private _currentShowDocumentIndex = 0;
@@ -79,12 +99,12 @@ class AppStore {
 
   @computed
   get currentDocument(): Document | undefined {
-    return this.documents?.find(document => document.id === this.currentDocumentId);
+    return this.documents?.find(document => document.id === this._currentDocumentId);
   }
 
   @action.bound
   setCurrentDocument(documentId: string | undefined) {
-    this.currentDocumentId = documentId;
+    this._currentDocumentId = documentId;
   }
 
   @computed
@@ -96,11 +116,16 @@ class AppStore {
   }
 
   @observable
-  isInitialized = false;
+  private _isInitialized = false;
+
+  @computed
+  get isInitialized() {
+    return this._isInitialized;
+  }
 
   @action.bound
   async loadFolders() {
-    this.folders = JSON.parse(await fs.readFile(config.folderFilePath, { encoding: 'utf8' })).folders;
+    this._folders = JSON.parse(await fs.readFile(config.folderFilePath, { encoding: 'utf8' })).folders;
   }
 
   @action.bound
@@ -120,9 +145,9 @@ class AppStore {
     try {
       await this.loadFolders();
       await this.loadDocuments();
-      this.currentFolderIndex = 0;
-      this.currentDocumentId = this.currentFolderDocuments[0]?.document.id;
-      this.isInitialized = true;
+      this._currentFolderIndex = 0;
+      this._currentDocumentId = this.currentFolderDocuments[0]?.document.id;
+      this._isInitialized = true;
     } catch (e) {
       this.logger.error(`Error: ${e.toString()}`);
     }
