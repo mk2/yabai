@@ -13,8 +13,8 @@ export default function reactionMethod<T>(expression: (r: IReactionPublic) => T)
       get() {
         // eslint-disable-next-line @typescript-eslint/no-this-alias
         const self = this;
-        return ((shouldDispose?: any) => {
-          if (shouldDispose === kShouldDispose) {
+        return ((...args: any[]) => {
+          if (args[0] === kShouldDispose) {
             disposer?.();
             disposer = undefined;
             return;
@@ -22,7 +22,7 @@ export default function reactionMethod<T>(expression: (r: IReactionPublic) => T)
 
           if (disposer) {
             // 既にreactionの登録が終わっていた場合は、普通のメソッド呼び出しなので、オリジナルのメソッドを呼び出す
-            effectFn.apply(self);
+            effectFn.apply(self, args);
           } else {
             disposer = reaction(expression, v => {
               effectFn.apply(self, [v]);
