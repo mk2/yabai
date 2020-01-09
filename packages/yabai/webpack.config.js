@@ -31,7 +31,7 @@ module.exports = {
     rules: [
       {
         test: /\.node$/,
-        loader: 'node-loader',
+        loader: 'native-addon-loader',
       },
       {
         test: /README/,
