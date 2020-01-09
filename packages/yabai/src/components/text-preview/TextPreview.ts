@@ -1,13 +1,14 @@
 import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
+import ReactableMixin from '@/helpers/mobx/ReactableMixin';
+import reactionMethod from '@/helpers/mobx/reactionMethod';
 import { store } from '@/models/AppStore';
 import blessed from 'blessed';
-import { reaction } from 'mobx';
 import { SetRequired } from 'type-fest';
 
 type TextPreviewOptions = SetRequired<blessed.Widgets.BoxOptions, 'parent'>;
 
-interface TextPreview extends LoggableMixin {}
+interface TextPreview extends LoggableMixin, ReactableMixin {}
 
 class TextPreview {
   textView: blessed.Widgets.BoxElement;
@@ -16,16 +17,7 @@ class TextPreview {
     this.textView = blessed.box({
       ...options,
     });
-    this.textView.setContent(options?.content || '');
-
-    reaction(
-      () => store.isInitialized,
-      () => this.setContent(),
-    );
-    reaction(
-      () => store.currentDocument,
-      () => this.setContent(),
-    );
+    this.makeReactable();
   }
 
   show() {
@@ -36,12 +28,13 @@ class TextPreview {
     this.textView.hide();
   }
 
+  @reactionMethod(() => [store.isInitialized, store.currentDocument])
   setContent() {
     this.textView.setContent(store.currentDocument?.content || '');
     this.textView.screen.render();
   }
 }
 
-applyMixins(TextPreview, [LoggableMixin]);
+applyMixins(TextPreview, [LoggableMixin, ReactableMixin]);
 
 export default TextPreview;

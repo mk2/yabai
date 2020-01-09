@@ -1,15 +1,16 @@
 import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
+import ReactableMixin from '@/helpers/mobx/ReactableMixin';
+import reactionMethod from '@/helpers/mobx/reactionMethod';
 import { store } from '@/models/AppStore';
 import { boundMethod } from 'autobind-decorator';
 import blessed from 'blessed';
-import { reaction } from 'mobx';
 
 type FolderListOptions = {
   parent: blessed.Widgets.Node;
 };
 
-interface FolderList extends LoggableMixin {}
+interface FolderList extends LoggableMixin, ReactableMixin {}
 
 class FolderList {
   private folderList: blessed.Widgets.ListElement;
@@ -48,15 +49,7 @@ class FolderList {
       parent: options.parent,
     });
     this.folderList.on('select', this.onSelect);
-
-    reaction(
-      () => store.isInitialized,
-      () => {
-        this.folderList.setItems(store.folders.map(folder => folder.name) as any[]);
-        this.folderList.select(store.currentFolderIndex);
-        this.folderList.screen.render();
-      },
-    );
+    this.makeReactable();
   }
 
   show() {
@@ -77,8 +70,15 @@ class FolderList {
     store.setCurrentFolder(index);
     store.setUIState('SELECT_NOTE');
   }
+
+  @reactionMethod(() => store.isInitialized)
+  reloadItems() {
+    this.folderList.setItems(store.folders.map(folder => folder.name) as any[]);
+    this.folderList.select(store.currentFolderIndex);
+    this.folderList.screen.render();
+  }
 }
 
-applyMixins(FolderList, [LoggableMixin]);
+applyMixins(FolderList, [LoggableMixin, ReactableMixin]);
 
 export default FolderList;
