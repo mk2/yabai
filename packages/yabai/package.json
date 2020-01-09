@@ -1,6 +1,6 @@
 {
   "name": "yabai",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "repository": "git@github.com:mk2/yabai.git",
   "bin": {
     "yabai": "./yabai.js"
