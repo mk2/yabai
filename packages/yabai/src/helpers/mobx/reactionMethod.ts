@@ -18,9 +18,6 @@ export default function reactionMethod<T>(expression: (r: IReactionPublic) => T)
           });
         }) as any;
       },
-      set() {
-        // do nothing
-      },
     };
   };
 }
