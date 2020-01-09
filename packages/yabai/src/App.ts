@@ -3,15 +3,15 @@ import NoteList from '@/components/note-list/NoteList';
 import TextEditor from '@/components/text-editor/TextEditor';
 import TextPreview from '@/components/text-preview/TextPreview';
 import TopBar from '@/components/top-bar/TopBar';
-import applyMixins from '@/helpers/applyMixins';
-import reactionMethod from '@/helpers/reactionMethod';
+import LoggableMixin from '@/helpers/logger/LoggableMixin';
+import applyMixins from '@/helpers/mixin/applyMixins';
+import ReactableMixin from '@/helpers/mobx/ReactableMixin';
+import reactionMethod from '@/helpers/mobx/reactionMethod';
 import { store } from '@/models/AppStore';
 import { config } from '@/models/Config';
-import Loggable from '@/traits/Loggable';
-import Reactable from '@/traits/reactable';
 import blessed from 'blessed';
 
-interface App extends Loggable, Reactable {}
+interface App extends LoggableMixin, ReactableMixin {}
 
 class App {
   private rootScreen: blessed.Widgets.Screen;
@@ -108,6 +108,6 @@ class App {
   }
 }
 
-applyMixins(App, [Loggable, Reactable]);
+applyMixins(App, [LoggableMixin, ReactableMixin]);
 
 export default App;

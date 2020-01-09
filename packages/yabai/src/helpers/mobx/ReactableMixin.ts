@@ -1,6 +1,6 @@
 export const kReactableMethodNames = Symbol('ReactableMethodNames');
 
-export default class Reactable {
+export default class ReactableMixin {
   makeReactable() {
     const reactableMethodNames = (this as any)[kReactableMethodNames] as string[];
     for (const methodName of reactableMethodNames) {

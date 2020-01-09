@@ -1,8 +1,8 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
-import applyMixins from '@/helpers/applyMixins';
-import Loggable from '@/traits/Loggable';
+import LoggableMixin from '@/helpers/logger/LoggableMixin';
+import applyMixins from '@/helpers/mixin/applyMixins';
 import CSON from 'cson-parser';
 import { action, computed, observable } from 'mobx';
 
@@ -30,7 +30,7 @@ type Document = {
 
 type UIState = 'SELECT_NOTE' | 'SELECT_FOLDER' | 'EDIT_NOTE';
 
-interface AppStore extends Loggable {}
+interface AppStore extends LoggableMixin {}
 
 class AppStore {
   @observable
@@ -116,7 +116,7 @@ class AppStore {
   }
 }
 
-applyMixins(AppStore, [Loggable]);
+applyMixins(AppStore, [LoggableMixin]);
 
 export const store = new AppStore();
 

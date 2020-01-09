@@ -1,6 +1,6 @@
-import applyMixins from '@/helpers/applyMixins';
+import LoggableMixin from '@/helpers/logger/LoggableMixin';
+import applyMixins from '@/helpers/mixin/applyMixins';
 import { store } from '@/models/AppStore';
-import Loggable from '@/traits/Loggable';
 import { boundMethod } from 'autobind-decorator';
 import blessed from 'blessed';
 import { reaction } from 'mobx';
@@ -9,7 +9,7 @@ type FolderListOptions = {
   parent: blessed.Widgets.Node;
 };
 
-interface FolderList extends Loggable {}
+interface FolderList extends LoggableMixin {}
 
 class FolderList {
   private folderList: blessed.Widgets.ListElement;
@@ -79,6 +79,6 @@ class FolderList {
   }
 }
 
-applyMixins(FolderList, [Loggable]);
+applyMixins(FolderList, [LoggableMixin]);
 
 export default FolderList;

@@ -1,13 +1,13 @@
-import applyMixins from '@/helpers/applyMixins';
+import LoggableMixin from '@/helpers/logger/LoggableMixin';
+import applyMixins from '@/helpers/mixin/applyMixins';
 import { store } from '@/models/AppStore';
-import Loggable from '@/traits/Loggable';
 import blessed from 'blessed';
 import { reaction } from 'mobx';
 import { SetRequired } from 'type-fest';
 
 type TextPreviewOptions = SetRequired<blessed.Widgets.BoxOptions, 'parent'>;
 
-interface TextPreview extends Loggable {}
+interface TextPreview extends LoggableMixin {}
 
 class TextPreview {
   textView: blessed.Widgets.BoxElement;
@@ -42,6 +42,6 @@ class TextPreview {
   }
 }
 
-applyMixins(TextPreview, [Loggable]);
+applyMixins(TextPreview, [LoggableMixin]);
 
 export default TextPreview;

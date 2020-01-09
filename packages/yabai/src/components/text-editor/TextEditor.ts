@@ -1,6 +1,6 @@
-import applyMixins from '@/helpers/applyMixins';
+import LoggableMixin from '@/helpers/logger/LoggableMixin';
+import applyMixins from '@/helpers/mixin/applyMixins';
 import { store } from '@/models/AppStore';
-import Loggable from '@/traits/Loggable';
 import blessed from 'blessed';
 import { reaction } from 'mobx';
 import TextBuffer from 'text-buffer';
@@ -8,7 +8,7 @@ import { SetRequired } from 'type-fest';
 
 type TextEditorOptions = SetRequired<blessed.Widgets.BoxOptions, 'parent'>;
 
-interface TextEditor extends Loggable {}
+interface TextEditor extends LoggableMixin {}
 
 class TextEditor {
   textBuf: TextBuffer.TextBuffer;
@@ -45,6 +45,6 @@ class TextEditor {
   }
 }
 
-applyMixins(TextEditor, [Loggable]);
+applyMixins(TextEditor, [LoggableMixin]);
 
 export default TextEditor;

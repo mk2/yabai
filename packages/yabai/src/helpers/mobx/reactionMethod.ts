@@ -1,4 +1,4 @@
-import { kReactableMethodNames } from '@/traits/reactable';
+import { kReactableMethodNames } from '@/helpers/mobx/ReactableMixin';
 import { IReactionPublic, reaction } from 'mobx';
 
 export default function reactionMethod<T>(expression: (r: IReactionPublic) => T): MethodDecorator {

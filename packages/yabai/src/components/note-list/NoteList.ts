@@ -1,6 +1,6 @@
-import applyMixins from '@/helpers/applyMixins';
+import LoggableMixin from '@/helpers/logger/LoggableMixin';
+import applyMixins from '@/helpers/mixin/applyMixins';
 import { store } from '@/models/AppStore';
-import Loggable from '@/traits/Loggable';
 import { boundMethod } from 'autobind-decorator';
 import blessed from 'blessed';
 import { observable, reaction } from 'mobx';
@@ -34,7 +34,7 @@ const kDefaultNoteListOption: Partial<NoteListOptions> = Object.freeze({
   },
 });
 
-interface NoteList extends Loggable {}
+interface NoteList extends LoggableMixin {}
 
 class NoteList {
   private noteList: blessed.Widgets.ListElement;
@@ -101,6 +101,6 @@ class NoteList {
   }
 }
 
-applyMixins(NoteList, [Loggable]);
+applyMixins(NoteList, [LoggableMixin]);
 
 export default NoteList;

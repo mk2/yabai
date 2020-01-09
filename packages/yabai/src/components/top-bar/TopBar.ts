@@ -1,6 +1,6 @@
-import applyMixins from '@/helpers/applyMixins';
+import LoggableMixin from '@/helpers/logger/LoggableMixin';
+import applyMixins from '@/helpers/mixin/applyMixins';
 import { store } from '@/models/AppStore';
-import Loggable from '@/traits/Loggable';
 import blessed from 'blessed';
 import { reaction } from 'mobx';
 
@@ -8,7 +8,7 @@ type TopBarOptions = {
   parent: blessed.Widgets.Node;
 };
 
-interface TopBar extends Loggable {}
+interface TopBar extends LoggableMixin {}
 
 class TopBar {
   private view: blessed.Widgets.BoxElement;
@@ -29,6 +29,6 @@ class TopBar {
   }
 }
 
-applyMixins(TopBar, [Loggable]);
+applyMixins(TopBar, [LoggableMixin]);
 
 export default TopBar;
