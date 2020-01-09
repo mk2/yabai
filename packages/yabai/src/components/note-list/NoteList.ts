@@ -1,5 +1,7 @@
 import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
+import ReactableMixin from '@/helpers/mobx/ReactableMixin';
+import reactionMethod from '@/helpers/mobx/reactionMethod';
 import { store } from '@/models/AppStore';
 import { boundMethod } from 'autobind-decorator';
 import blessed from 'blessed';
@@ -34,12 +36,10 @@ const kDefaultNoteListOption: Partial<NoteListOptions> = Object.freeze({
   },
 });
 
-interface NoteList extends LoggableMixin {}
+interface NoteList extends LoggableMixin, ReactableMixin {}
 
 class NoteList {
   private noteList: blessed.Widgets.ListElement;
-  @observable
-  private currentShowDocumentIndex = 0;
 
   constructor(options: NoteListOptions) {
     this.noteList = blessed.list({
@@ -49,18 +49,7 @@ class NoteList {
     this.noteList.key(['up'], this.onUpKeyPressed);
     this.noteList.key(['down'], this.onDownKeyPressed);
     this.noteList.key(['f'], this.onFolderKeyPressed);
-    reaction(
-      () => store.isInitialized,
-      () => this.reloadItems(),
-    );
-    reaction(
-      () => store.currentFolder,
-      () => this.reloadItems(),
-    );
-    reaction(
-      () => this.currentShowDocumentIndex,
-      () => this.setCurrentDocument(),
-    );
+    this.makeReactable();
   }
 
   focus() {
@@ -69,15 +58,15 @@ class NoteList {
 
   @boundMethod
   onUpKeyPressed() {
-    if (0 < this.currentShowDocumentIndex) {
-      this.currentShowDocumentIndex--;
+    if (0 < store.currentShowDocumentIndex) {
+      store.setCurrentShowDocumentIndex(store.currentShowDocumentIndex - 1);
     }
   }
 
   @boundMethod
   onDownKeyPressed() {
-    if (this.currentShowDocumentIndex < store.currentFolderDocuments.length - 1) {
-      this.currentShowDocumentIndex++;
+    if (store.currentShowDocumentIndex < store.currentFolderDocuments.length - 1) {
+      store.setCurrentShowDocumentIndex(store.currentShowDocumentIndex + 1);
     }
   }
 
@@ -86,21 +75,21 @@ class NoteList {
     store.setUIState('SELECT_FOLDER');
   }
 
-  @boundMethod
+  @reactionMethod(() => [store.isInitialized, store.currentFolder])
   reloadItems() {
     this.noteList.setItems(store.currentFolderDocuments.map(({ document }) => document.title) as any[]);
-    this.noteList.select(this.currentShowDocumentIndex);
+    this.noteList.select(store.currentShowDocumentIndex);
     this.noteList.screen.render();
   }
 
-  @action.bound
+  @reactionMethod(() => store.currentShowDocumentIndex)
   setCurrentDocument() {
     store.setCurrentDocument(
-      store.currentFolderDocuments.find(({ index }) => index === this.currentShowDocumentIndex)?.document.id,
+      store.currentFolderDocuments.find(({ index }) => index === store.currentShowDocumentIndex)?.document.id,
     );
   }
 }
 
-applyMixins(NoteList, [LoggableMixin]);
+applyMixins(NoteList, [LoggableMixin, ReactableMixin]);
 
 export default NoteList;

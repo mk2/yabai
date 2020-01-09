@@ -64,6 +64,19 @@ class AppStore {
   @observable
   currentDocumentId: string | undefined;
 
+  @observable
+  private _currentShowDocumentIndex = 0;
+
+  @computed
+  get currentShowDocumentIndex() {
+    return this._currentShowDocumentIndex;
+  }
+
+  @action.bound
+  setCurrentShowDocumentIndex(currentShowDocumentIndex: number) {
+    this._currentShowDocumentIndex = currentShowDocumentIndex;
+  }
+
   @computed
   get currentDocument(): Document | undefined {
     return this.documents?.find(document => document.id === this.currentDocumentId);
