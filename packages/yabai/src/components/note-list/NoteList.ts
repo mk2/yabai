@@ -49,6 +49,7 @@ class NoteList {
     this.noteList.key(['up'], this.onUpKeyPressed);
     this.noteList.key(['down'], this.onDownKeyPressed);
     this.noteList.key(['f'], this.onFolderKeyPressed);
+    this.noteList.on('select', this.onSelect);
     this.makeReactable();
   }
 
@@ -73,6 +74,12 @@ class NoteList {
   @boundMethod
   onFolderKeyPressed() {
     store.setUIState('SELECT_FOLDER');
+  }
+
+  @boundMethod
+  async onSelect() {
+    await store.openCurrentEditingCache();
+    store.setUIState('EDIT_NOTE');
   }
 
   @reactionMethod(() => [store.isInitialized, store.currentFolder])

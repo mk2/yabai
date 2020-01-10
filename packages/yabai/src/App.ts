@@ -26,6 +26,7 @@ class App {
   constructor() {
     this.program = blessed.program();
     this.program.disableMouse();
+    this.program.cursorShape('block', true);
     this.rootScreen = blessed.screen({
       program: this.program,
       smartCSR: true,
@@ -46,7 +47,7 @@ class App {
       right: 0,
       width: '20%',
     });
-    this.textEditor = new TextEditor({
+    this.textEditor = new TextEditor(this.program, {
       parent: this.rootScreen,
       top: 1,
       bottom: 0,
@@ -70,6 +71,7 @@ class App {
     this.folderList.hide();
 
     this.rootScreen.key(['escape', 'q', 'C-c'], () => {
+      this.program?.cursorReset();
       return process.exit(0);
     });
     this.rootScreen.key(['s'], () => {
@@ -91,18 +93,21 @@ class App {
   @reactionMethod(() => store.uiState)
   onUIStateChanged() {
     if (store.uiState === 'SELECT_NOTE') {
+      this.program?.hideCursor();
       this.folderList?.hide();
       this.textEditor?.hide();
       this.textPreview?.show();
       this.noteList?.focus();
     } else if (store.uiState === 'SELECT_FOLDER') {
+      this.program?.hideCursor();
       this.textEditor?.hide();
       this.textPreview?.show();
       this.folderList?.focus();
     } else if (store.uiState === 'EDIT_NOTE') {
       this.folderList?.hide();
       this.textPreview?.hide();
-      this.textEditor?.show();
+      this.textEditor?.focus();
+      this.program?.showCursor();
     }
     this.rootScreen.render();
   }
