@@ -38,7 +38,7 @@ class UIStore {
 
   @computed
   get textViewWidthPercentage() {
-    return Math.round(100 * this._centerSeparateRatio);
+    return 100 - this.noteListViewWidthPercentage;
   }
 }
 

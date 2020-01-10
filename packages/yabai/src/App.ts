@@ -61,7 +61,7 @@ class App {
       top: 1,
       bottom: 0,
       right: 0,
-      width: '80%',
+      width: `${uiStore.textViewWidthPercentage}%`,
     });
     this.topBar = new TopBar({
       parent: this.rootScreen,
@@ -74,12 +74,6 @@ class App {
     this.rootScreen.key(['escape', 'q', 'C-c'], () => {
       this.program?.cursorReset();
       return process.exit(0);
-    });
-    this.rootScreen.key(['s'], () => {
-      this.logger.info('hide textEditor');
-      this.textEditor?.hide();
-      this.textPreview?.show();
-      this.rootScreen.render();
     });
     this.noteList.focus();
 
