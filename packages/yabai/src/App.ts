@@ -46,14 +46,14 @@ class App {
       bottom: 0,
       left: 0,
       right: 0,
-      width: '20%',
+      width: `${uiStore.noteListViewWidthPercentage}%`,
     });
     this.textEditor = new TextEditor(this.program, {
       parent: this.rootScreen,
       top: 1,
       bottom: 0,
       right: 0,
-      width: '80%',
+      width: `${uiStore.textViewWidthPercentage}%`,
     });
     this.textEditor.hide();
     this.textPreview = new TextPreview({

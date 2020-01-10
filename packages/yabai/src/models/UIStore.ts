@@ -23,6 +23,23 @@ class UIStore {
   setUIState(uiState: UIState) {
     this._uiState = uiState;
   }
+
+  /**
+   * centerSeparateRatio
+   */
+
+  @observable
+  private _centerSeparateRatio = 0.2;
+
+  @computed
+  get noteListViewWidthPercentage() {
+    return Math.round(100 * this._centerSeparateRatio);
+  }
+
+  @computed
+  get textViewWidthPercentage() {
+    return Math.round(100 * this._centerSeparateRatio);
+  }
 }
 
 applyMixins(UIStore, [LoggableMixin]);
