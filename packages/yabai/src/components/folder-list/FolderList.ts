@@ -2,7 +2,8 @@ import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
 import ReactableMixin from '@/helpers/mobx/ReactableMixin';
 import reactionMethod from '@/helpers/mobx/reactionMethod';
-import { store } from '@/models/AppStore';
+import { appStore } from '@/models/AppStore';
+import { uiStore } from '@/models/UIStore';
 import { boundMethod } from 'autobind-decorator';
 import blessed from 'blessed';
 
@@ -67,14 +68,14 @@ class FolderList {
 
   @boundMethod
   onSelect(_item: blessed.Widgets.BoxElement, index: number) {
-    store.setCurrentFolder(index);
-    store.setUIState('SELECT_NOTE');
+    appStore.setCurrentFolder(index);
+    uiStore.setUIState('SELECT_NOTE');
   }
 
-  @reactionMethod(() => store.isInitialized)
+  @reactionMethod(() => appStore.isInitialized)
   reloadItems() {
-    this.folderList.setItems(store.folders.map(folder => folder.name) as any[]);
-    this.folderList.select(store.currentFolderIndex);
+    this.folderList.setItems(appStore.folders.map(folder => folder.name) as any[]);
+    this.folderList.select(appStore.currentFolderIndex);
     this.folderList.screen.render();
   }
 }

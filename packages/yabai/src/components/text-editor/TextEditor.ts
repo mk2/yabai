@@ -2,7 +2,7 @@ import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
 import ReactableMixin from '@/helpers/mobx/ReactableMixin';
 import reactionMethod from '@/helpers/mobx/reactionMethod';
-import { store } from '@/models/AppStore';
+import { appStore } from '@/models/AppStore';
 import { boundMethod } from 'autobind-decorator';
 import blessed from 'blessed';
 import { observable } from 'mobx';
@@ -48,10 +48,10 @@ class TextEditor {
     this.textView.focus();
   }
 
-  @reactionMethod(() => store.currentEditingCache)
+  @reactionMethod(() => appStore.currentEditingCache)
   reloadContent() {
-    if (!store.currentEditingCache) return;
-    this.textBuf.setPath(store.currentEditingCache);
+    if (!appStore.currentEditingCache) return;
+    this.textBuf.setPath(appStore.currentEditingCache);
     this.textBuf.reload();
   }
 
@@ -68,9 +68,10 @@ class TextEditor {
   }
 
   getVisiblePos(p: Point) {
+    this.logger.info(JSON.stringify(this.textView.screen.width));
     return p.translate({
       row: parseInt('' + this.textView.position.top),
-      column: parseInt('' + this.textView.position.left),
+      column: Math.round((this.textView.screen.width as number) / 5),
     });
   }
 }

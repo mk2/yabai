@@ -30,28 +30,9 @@ type Document = {
   isTrashed: boolean;
 };
 
-type UIState = 'SELECT_NOTE' | 'SELECT_FOLDER' | 'EDIT_NOTE';
-
 interface AppStore extends LoggableMixin {}
 
 class AppStore {
-  /**
-   * UIState
-   */
-
-  @observable
-  private _uiState: UIState = 'SELECT_NOTE';
-
-  @computed
-  get uiState() {
-    return this._uiState;
-  }
-
-  @action.bound
-  setUIState(uiState: UIState) {
-    this._uiState = uiState;
-  }
-
   /**
    * Folders
    */
@@ -211,6 +192,6 @@ class AppStore {
 
 applyMixins(AppStore, [LoggableMixin]);
 
-export const store = new AppStore();
+export const appStore = new AppStore();
 
 export default AppStore;

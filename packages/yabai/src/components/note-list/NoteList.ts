@@ -2,11 +2,10 @@ import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
 import ReactableMixin from '@/helpers/mobx/ReactableMixin';
 import reactionMethod from '@/helpers/mobx/reactionMethod';
-import { store } from '@/models/AppStore';
+import { appStore } from '@/models/AppStore';
+import { uiStore } from '@/models/UIStore';
 import { boundMethod } from 'autobind-decorator';
 import blessed from 'blessed';
-import { observable, reaction } from 'mobx';
-import { action } from 'mobx';
 import { SetRequired } from 'type-fest';
 
 type NoteListOptions = SetRequired<blessed.Widgets.ListOptions<any>, 'parent'>;
@@ -59,40 +58,40 @@ class NoteList {
 
   @boundMethod
   onUpKeyPressed() {
-    if (0 < store.currentShowDocumentIndex) {
-      store.setCurrentShowDocumentIndex(store.currentShowDocumentIndex - 1);
+    if (0 < appStore.currentShowDocumentIndex) {
+      appStore.setCurrentShowDocumentIndex(appStore.currentShowDocumentIndex - 1);
     }
   }
 
   @boundMethod
   onDownKeyPressed() {
-    if (store.currentShowDocumentIndex < store.currentFolderDocuments.length - 1) {
-      store.setCurrentShowDocumentIndex(store.currentShowDocumentIndex + 1);
+    if (appStore.currentShowDocumentIndex < appStore.currentFolderDocuments.length - 1) {
+      appStore.setCurrentShowDocumentIndex(appStore.currentShowDocumentIndex + 1);
     }
   }
 
   @boundMethod
   onFolderKeyPressed() {
-    store.setUIState('SELECT_FOLDER');
+    uiStore.setUIState('SELECT_FOLDER');
   }
 
   @boundMethod
   async onSelect() {
-    await store.openCurrentEditingCache();
-    store.setUIState('EDIT_NOTE');
+    await appStore.openCurrentEditingCache();
+    uiStore.setUIState('EDIT_NOTE');
   }
 
-  @reactionMethod(() => [store.isInitialized, store.currentFolder])
+  @reactionMethod(() => [appStore.isInitialized, appStore.currentFolder])
   reloadItems() {
-    this.noteList.setItems(store.currentFolderDocuments.map(({ document }) => document.title) as any[]);
-    this.noteList.select(store.currentShowDocumentIndex);
+    this.noteList.setItems(appStore.currentFolderDocuments.map(({ document }) => document.title) as any[]);
+    this.noteList.select(appStore.currentShowDocumentIndex);
     this.noteList.screen.render();
   }
 
-  @reactionMethod(() => store.currentShowDocumentIndex)
+  @reactionMethod(() => appStore.currentShowDocumentIndex)
   setCurrentDocument() {
-    store.setCurrentDocument(
-      store.currentFolderDocuments.find(({ index }) => index === store.currentShowDocumentIndex)?.document.id,
+    appStore.setCurrentDocument(
+      appStore.currentFolderDocuments.find(({ index }) => index === appStore.currentShowDocumentIndex)?.document.id,
     );
   }
 }

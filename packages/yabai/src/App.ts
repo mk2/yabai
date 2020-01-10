@@ -7,8 +7,9 @@ import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
 import ReactableMixin from '@/helpers/mobx/ReactableMixin';
 import reactionMethod from '@/helpers/mobx/reactionMethod';
-import { store } from '@/models/AppStore';
+import { appStore } from '@/models/AppStore';
 import { config } from '@/models/Config';
+import { uiStore } from '@/models/UIStore';
 import blessed from 'blessed';
 
 interface App extends LoggableMixin, ReactableMixin {}
@@ -82,7 +83,7 @@ class App {
     });
     this.noteList.focus();
 
-    store.init();
+    appStore.init();
   }
 
   start() {
@@ -90,20 +91,20 @@ class App {
     this.logger.info(`Yabai started!`);
   }
 
-  @reactionMethod(() => store.uiState)
+  @reactionMethod(() => uiStore.uiState)
   onUIStateChanged() {
-    if (store.uiState === 'SELECT_NOTE') {
+    if (uiStore.uiState === 'SELECT_NOTE') {
       this.program?.hideCursor();
       this.folderList?.hide();
       this.textEditor?.hide();
       this.textPreview?.show();
       this.noteList?.focus();
-    } else if (store.uiState === 'SELECT_FOLDER') {
+    } else if (uiStore.uiState === 'SELECT_FOLDER') {
       this.program?.hideCursor();
       this.textEditor?.hide();
       this.textPreview?.show();
       this.folderList?.focus();
-    } else if (store.uiState === 'EDIT_NOTE') {
+    } else if (uiStore.uiState === 'EDIT_NOTE') {
       this.folderList?.hide();
       this.textPreview?.hide();
       this.textEditor?.focus();

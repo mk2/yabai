@@ -2,7 +2,7 @@ import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
 import ReactableMixin from '@/helpers/mobx/ReactableMixin';
 import reactionMethod from '@/helpers/mobx/reactionMethod';
-import { store } from '@/models/AppStore';
+import { appStore } from '@/models/AppStore';
 import blessed from 'blessed';
 import { reaction } from 'mobx';
 
@@ -25,14 +25,14 @@ class TopBar {
     });
 
     reaction(
-      () => store.currentFolder,
-      () => this.view.setContent(`>>> ${store.currentFolder?.name || 'NOT SELECTED'}`),
+      () => appStore.currentFolder,
+      () => this.view.setContent(`>>> ${appStore.currentFolder?.name || 'NOT SELECTED'}`),
     );
   }
 
-  @reactionMethod(() => store.currentFolder)
+  @reactionMethod(() => appStore.currentFolder)
   setContent() {
-    this.view.setContent(`>>> ${store.currentFolder?.name || 'NOT SELECTED'}`);
+    this.view.setContent(`>>> ${appStore.currentFolder?.name || 'NOT SELECTED'}`);
   }
 }
 

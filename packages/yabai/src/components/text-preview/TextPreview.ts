@@ -2,7 +2,7 @@ import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
 import ReactableMixin from '@/helpers/mobx/ReactableMixin';
 import reactionMethod from '@/helpers/mobx/reactionMethod';
-import { store } from '@/models/AppStore';
+import { appStore } from '@/models/AppStore';
 import blessed from 'blessed';
 import { SetRequired } from 'type-fest';
 
@@ -28,9 +28,9 @@ class TextPreview {
     this.textView.hide();
   }
 
-  @reactionMethod(() => [store.isInitialized, store.currentDocument])
+  @reactionMethod(() => [appStore.isInitialized, appStore.currentDocument])
   setContent() {
-    this.textView.setContent(store.currentDocument?.content || '');
+    this.textView.setContent(appStore.currentDocument?.content || '');
     this.textView.screen.render();
   }
 }
