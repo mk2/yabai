@@ -15,7 +15,9 @@ type IPoint = TextBuffer.PointCompatible;
 type IRange = TextBuffer.RangeCompatible;
 
 type Key = {
-  sequence: string;
+  sequence?: string;
+  ch?: string;
+  full?: string;
   name?: string;
   ctrl: boolean;
   meta: boolean;
@@ -39,6 +41,7 @@ class TextEditor {
       ...options,
     });
     this.textView.on('keypress', this.onKeypress);
+    this.textView.on('blur', this.onBlur);
     this.textBuf.onDidReload(this.onDidReload);
     this.program = program;
     this.makeReactable();
@@ -75,7 +78,6 @@ class TextEditor {
 
   @boundMethod
   onKeypress(ch?: string, key?: Key) {
-    this.logger.info('' + key?.name);
     if (key?.name === 'escape') {
       uiStore.setUIState('SELECT_NOTE');
     } else if (key?.name === 'up') {
@@ -86,11 +88,18 @@ class TextEditor {
       this.updateCursorPosition({ row: 0, column: -1 });
     } else if (key?.name === 'right') {
       this.updateCursorPosition({ row: 0, column: 1 });
+    } else if (key?.ch) {
+      this.textBuf.insert(this.cursorPosition, key.ch);
+      this.updateCursorPosition({ row: 0, column: 1 });
+      this.textView.setContent(this.textBuf.getText());
+      this.textView.screen.render();
     }
   }
 
   @boundMethod
-  onBlur() {}
+  onBlur() {
+    this.logger.info('onBlur');
+  }
 
   updateCursorPosition(diff: IPoint) {
     const nextCursorPosition = this.cursorPosition.translate(diff);
