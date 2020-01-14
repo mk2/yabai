@@ -18,7 +18,8 @@
     "build:js": "babel src --out-dir lib --extensions \".ts,.js\" --source-maps inline",
     "bundle": "run-s build bundle:js",
     "bundle:js": "webpack",
-    "dev": "run-s clean:log build run"
+    "dev": "run-s clean:log build run",
+    "test": "jest"
   },
   "dependencies": {
     "autobind-decorator": "^2.4.0",
