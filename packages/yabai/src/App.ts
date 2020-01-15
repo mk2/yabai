@@ -5,12 +5,11 @@ import TextPreview from '@/components/text-preview/TextPreview';
 import TopBar from '@/components/top-bar/TopBar';
 import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
-import ReactableMixin from '@/helpers/mobx/ReactableMixin';
-import reactionMethod from '@/helpers/mobx/reactionMethod';
 import { appStore } from '@/models/AppStore';
 import { config } from '@/models/Config';
 import { uiStore } from '@/models/UIStore';
 import blessed from 'blessed';
+import { ReactableMixin, reactionMethod } from 'mobx-method-decorators';
 
 interface App extends LoggableMixin, ReactableMixin {}
 

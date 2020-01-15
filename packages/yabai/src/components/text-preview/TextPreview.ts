@@ -1,9 +1,8 @@
 import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
-import ReactableMixin from '@/helpers/mobx/ReactableMixin';
-import reactionMethod from '@/helpers/mobx/reactionMethod';
 import { appStore } from '@/models/AppStore';
 import blessed from 'blessed';
+import { ReactableMixin, reactionMethod } from 'mobx-method-decorators';
 import { SetRequired } from 'type-fest';
 
 type TextPreviewOptions = SetRequired<blessed.Widgets.BoxOptions, 'parent'>;
