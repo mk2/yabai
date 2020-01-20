@@ -77,7 +77,7 @@ class CursorMovableMixin {
   }
 
   private calcUnicodeStrWidth(str: string): number {
-    return (blessed as any).unicode.strWidth(str);
+    return blessed.unicode.strWidth(str);
   }
 }
 

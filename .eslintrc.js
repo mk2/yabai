@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  ignorePatterns: ['node_modules/', 'packages/publish/'],
+  ignorePatterns: ['node_modules/', 'packages/publish/', 'packages/@types'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2018,

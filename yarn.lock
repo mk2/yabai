@@ -960,13 +960,6 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/blessed@^0.1.15":
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/@types/blessed/-/blessed-0.1.15.tgz#295c3243a9b88f5606c4627fb8e3581d8fa56cea"
-  integrity sha512-HEaYeZxhs1K6PWh7FZKG9n+5aLp1Ke3OSw5QmcPHOMJjThG53+14rHHnFxv/UcWTHRwotWys7S77K9Dxo1YSxg==
-  dependencies:
-    "@types/node" "*"
-
 "@types/color-name@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"

@@ -15,6 +15,10 @@
     {
       "directory": "./packages/blessed",
       "changeProcessCWD": true
+    },
+    {
+      "directory": "./packages/@types/blessed",
+      "changeProcessCWD": true
     }
   ]
 }

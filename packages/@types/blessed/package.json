@@ -1,0 +1,41 @@
+{
+    "name": "@types/blessed",
+    "version": "0.1.15",
+    "description": "TypeScript definitions for blessed",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Bryn Austin Bellomy",
+            "url": "https://github.com/brynbellomy",
+            "githubUsername": "brynbellomy"
+        },
+        {
+            "name": "Steve Kellock",
+            "url": "https://github.com/skellock",
+            "githubUsername": "skellock"
+        },
+        {
+            "name": "Max Brauer",
+            "url": "https://github.com/mamachanko",
+            "githubUsername": "mamachanko"
+        },
+        {
+            "name": "Nathan Rajlich",
+            "url": "https://github.com/TooTallNate",
+            "githubUsername": "TooTallNate"
+        }
+    ],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/blessed"
+    },
+    "scripts": {},
+    "dependencies": {
+        "@types/node": "*"
+    },
+    "typesPublisherContentHash": "19f361210b9dfd575d64be1c4bd1a2aa6b8c38f55ecea1f01073d1eebe07654a",
+    "typeScriptVersion": "2.8"
+}

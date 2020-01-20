@@ -4,7 +4,8 @@
   "private": true,
   "workspaces": [
     "packages/yabai",
-    "packages/blessed"
+    "packages/blessed",
+    "packages/@types/blessed"
   ],
   "scripts": {
     "prepare-dist": "node ./scripts/prepare-dist.js",

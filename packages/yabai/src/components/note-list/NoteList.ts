@@ -82,7 +82,7 @@ class NoteList {
 
   @reactionMethod(() => [appStore.isInitialized, appStore.currentFolder])
   reloadItems() {
-    this.noteList.setItems(appStore.currentFolderDocuments.map(({ document }) => document.title) as any[]);
+    this.noteList.setItems(appStore.currentFolderDocuments.map(({ document }) => document.title));
     this.noteList.select(appStore.currentShowDocumentIndex);
     this.noteList.screen.render();
   }
