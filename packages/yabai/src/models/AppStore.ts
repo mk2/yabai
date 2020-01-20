@@ -65,7 +65,7 @@ class AppStore {
 
   @actionAsync
   async loadDocuments() {
-    const files = (await task(fs.readdir(config.notesDirPath))).filter(e => !/^\..*/.test(e));
+    const files = (await task(fs.readdir(config.notesDirPath))).filter(e => /(\.cson)$/.test(e));
     this._documents = await task(
       Promise.all(
         files.map(async file => {
