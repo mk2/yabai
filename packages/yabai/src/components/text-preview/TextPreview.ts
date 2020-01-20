@@ -2,6 +2,8 @@ import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
 import { appStore } from '@/models/AppStore';
 import blessed from 'blessed';
+import marked from 'marked';
+import TerminalRenderer from 'marked-terminal';
 import { ReactableMixin, reactionMethod } from 'mobx-method-decorators';
 import { SetRequired } from 'type-fest';
 
@@ -16,6 +18,9 @@ class TextPreview {
     this.textView = blessed.box({
       ...options,
     });
+    marked.setOptions({
+      renderer: new TerminalRenderer(),
+    });
     this.makeReactable();
   }
 
@@ -29,7 +34,8 @@ class TextPreview {
 
   @reactionMethod(() => [appStore.isInitialized, appStore.currentDocument?.content])
   setContent() {
-    this.textView.setContent(appStore.currentDocument?.content || '');
+    if (!appStore.currentDocument?.content) return;
+    this.textView.setContent(marked(appStore.currentDocument.content));
     this.textView.screen.render();
   }
 }
