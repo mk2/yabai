@@ -24,6 +24,10 @@ class CursorMovableMixin {
     return this.textBuf.getLineCount();
   }
 
+  resetCursorPosition() {
+    this.cursorPosition = new Point(0, 0);
+  }
+
   updateCursorPosition(_diff: IPoint) {
     const diff = Point.fromObject(_diff, false);
     const nPos = this.cursorPosition.translate(diff);

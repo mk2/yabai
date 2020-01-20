@@ -64,6 +64,7 @@ class TextEditor {
   @reactionMethod(() => appStore.currentEditingCache)
   reloadContent() {
     if (!appStore.currentEditingCache) return;
+    this.resetCursorPosition();
     this.textBuf.setPath(appStore.currentEditingCache);
     this.textBuf.reload();
   }
