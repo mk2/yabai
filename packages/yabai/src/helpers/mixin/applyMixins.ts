@@ -1,6 +1,6 @@
 import { Class } from 'type-fest';
 
-export default function applyMixins<T>(derivedCtor: Class<T>, baseCtors: Class[]): Class<T> {
+export default function applyMixins<T>(derivedCtor: Class<T>, baseCtors: any[]): Class<T> {
   baseCtors.forEach(baseCtor => {
     Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
       if (name === 'constructor') return;

@@ -4,14 +4,12 @@ import { appStore } from '@/models/AppStore';
 import { uiStore } from '@/models/UIStore';
 import { boundMethod } from 'autobind-decorator';
 import blessed from 'blessed';
+import { observable } from 'mobx';
 import { ReactableMixin, reactionMethod } from 'mobx-method-decorators';
 import TextBuffer, { Point, Range } from 'text-buffer';
 import { SetRequired } from 'type-fest';
 
-type Point = TextBuffer.Point;
-type Range = TextBuffer.Range;
-type IPoint = TextBuffer.PointCompatible;
-type IRange = TextBuffer.RangeCompatible;
+import CursorMovableMixin from './CursorMovableMixin';
 
 type Key = {
   sequence?: string;
@@ -25,10 +23,12 @@ type Key = {
 
 type TextEditorOptions = SetRequired<blessed.Widgets.BoxOptions, 'parent'>;
 
-interface TextEditor extends LoggableMixin, ReactableMixin {}
+interface TextEditor extends LoggableMixin, ReactableMixin, CursorMovableMixin {}
 
 class TextEditor {
-  cursorPosition: Point = new Point(0, 0);
+  private isSaving = false;
+  cursorPosition = new Point(0, 0);
+  scrollAmount = new Point(0, 0);
 
   textBuf: TextBuffer.TextBuffer;
   textView: blessed.Widgets.BoxElement;
@@ -59,6 +59,7 @@ class TextEditor {
     this.show();
     this.textView.screen.grabKeys = true;
     this.textView.focus();
+    this.applyCursorPos(this.cursorPosition);
   }
 
   @reactionMethod(() => appStore.currentEditingCache)
@@ -80,6 +81,15 @@ class TextEditor {
     if (key?.name === 'escape') {
       this.save();
       uiStore.setUIState('SELECT_NOTE');
+    } else if (key?.name === 'backspace') {
+      this.textBuf.delete(new Range(this.cursorPosition.translate({ row: 0, column: -1 }), this.cursorPosition));
+      this.updateCursorPosition({ row: 0, column: -1 });
+    } else if (key?.name === 'delete') {
+      this.textBuf.delete(new Range(this.cursorPosition));
+      this.updateCursorPosition({ row: 0, column: -1 });
+    } else if (key?.name === 'enter') {
+      this.textBuf.insert(this.cursorPosition.translate({ row: 1, column: 0 }), '\n');
+      this.updateCursorPosition({ row: 1, column: 0 });
     } else if (key?.name === 'up') {
       this.updateCursorPosition({ row: -1, column: 0 });
     } else if (key?.name === 'down') {
@@ -91,14 +101,21 @@ class TextEditor {
     } else if (key?.ch) {
       this.textBuf.insert(this.cursorPosition, key.ch);
       this.updateCursorPosition({ row: 0, column: 1 });
-      this.textView.setContent(this.textBuf.getText());
-      this.textView.screen.render();
     }
+
+    this.updateContent();
+    this.textView.screen.render();
   }
 
   async save() {
-    await this.textBuf.save();
-    await appStore.setCurrentDocumentContent(this.textBuf.getText());
+    if (this.isSaving) return;
+    this.isSaving = true;
+    try {
+      await this.textBuf.save();
+      await appStore.setCurrentDocumentContent(this.textBuf.getText());
+    } finally {
+      this.isSaving = false;
+    }
   }
 
   @boundMethod
@@ -106,32 +123,13 @@ class TextEditor {
     this.logger.info('onBlur');
   }
 
-  updateCursorPosition(diff: IPoint) {
-    const nextCursorPosition = this.cursorPosition.translate(diff);
-    const nextRow = nextCursorPosition.row;
-    const nextColumn = nextCursorPosition.column;
-    if (nextRow < 0 || nextColumn < 0) return;
-    if (this.textBuf.getLineCount() <= nextRow) return;
-    const nextRowMaxColumn = this.textBuf.lineLengthForRow(nextRow);
-    nextCursorPosition.column = nextRowMaxColumn < nextColumn ? nextRowMaxColumn : nextColumn;
-    this.cursorPosition = nextCursorPosition;
-    this.applyCursorPos(this.cursorPosition);
-  }
-
-  applyCursorPos(pos: Point) {
-    const offsetCursorPosition = this.getVisiblePos(pos);
-    this.program?.cursorPos(offsetCursorPosition.row, offsetCursorPosition.column);
-  }
-
-  getVisiblePos(p: Point) {
-    const col = (blessed as any).unicode.strWidth(this.textBuf.getTextInRange(new Range(new Point(p.row, 0), p)));
-    return new Point(p.row, col).translate({
-      row: parseInt('' + this.textView.position.top),
-      column: Math.round((this.textView.screen.width as number) * (uiStore.noteListViewWidthPercentage / 100)),
-    });
+  updateContent() {
+    const startLine = new Point(this.scrollAmount.row, 0);
+    const endLine = new Point(this.scrollAmount.row + this.viewRowSize, 0);
+    this.textView.setContent(this.textBuf.getTextInRange(new Range(startLine, endLine)));
   }
 }
 
-applyMixins(TextEditor, [LoggableMixin, ReactableMixin]);
+applyMixins(TextEditor, [LoggableMixin, ReactableMixin, CursorMovableMixin]);
 
 export default TextEditor;
