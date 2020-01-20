@@ -4,7 +4,6 @@ import { appStore } from '@/models/AppStore';
 import { uiStore } from '@/models/UIStore';
 import { boundMethod } from 'autobind-decorator';
 import blessed from 'blessed';
-import { observable } from 'mobx';
 import { ReactableMixin, reactionMethod } from 'mobx-method-decorators';
 import TextBuffer, { Point, Range } from 'text-buffer';
 import { SetRequired } from 'type-fest';
