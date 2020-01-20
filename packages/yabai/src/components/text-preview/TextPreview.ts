@@ -19,7 +19,9 @@ class TextPreview {
       ...options,
     });
     marked.setOptions({
-      renderer: new TerminalRenderer(),
+      renderer: new TerminalRenderer({
+        tab: 2,
+      }),
     });
     this.makeReactable();
   }

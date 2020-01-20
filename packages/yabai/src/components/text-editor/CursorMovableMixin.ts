@@ -1,3 +1,4 @@
+import { calcUnicodeStrWidth } from '@/helpers/blessed/unicode';
 import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import { uiStore } from '@/models/UIStore';
 import blessed from 'blessed';
@@ -28,6 +29,10 @@ class CursorMovableMixin {
     this.cursorPosition = new Point(0, 0);
   }
 
+  resetScrollAmount() {
+    this.scrollAmount = new Point(0, 0);
+  }
+
   updateCursorPosition(_diff: IPoint) {
     const diff = Point.fromObject(_diff, false);
     const nPos = this.cursorPosition.translate(diff);
@@ -56,7 +61,6 @@ class CursorMovableMixin {
 
     this.cursorPosition = nPos;
     this.applyCursorPos(this.cursorPosition);
-    this.logger.info(JSON.stringify(this.cursorPosition));
   }
 
   applyCursorPos(pos: Point) {
@@ -69,15 +73,11 @@ class CursorMovableMixin {
     const curPos = pos;
 
     const row = pos.translate(this.scrollAmount.negate()).row;
-    const column = this.calcUnicodeStrWidth(this.textBuf.getTextInRange(new Range(startPos, curPos)));
+    const column = calcUnicodeStrWidth(this.textBuf.getTextInRange(new Range(startPos, curPos)));
     return new Point(row, column).translate({
       row: parseInt('' + this.textView.position.top),
       column: Math.round(parseInt('' + this.textView.screen.width) * (uiStore.noteListViewWidthPercentage / 100)),
     });
-  }
-
-  private calcUnicodeStrWidth(str: string): number {
-    return blessed.unicode.strWidth(str);
   }
 }
 

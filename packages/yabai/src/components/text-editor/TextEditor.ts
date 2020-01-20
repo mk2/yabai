@@ -1,3 +1,4 @@
+import { substrProperWidth } from '@/helpers/blessed/unicode';
 import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
 import { appStore } from '@/models/AppStore';
@@ -26,12 +27,17 @@ interface TextEditor extends LoggableMixin, ReactableMixin, CursorMovableMixin {
 
 class TextEditor {
   private isSaving = false;
+  private isLoading = false;
   cursorPosition = new Point(0, 0);
   scrollAmount = new Point(0, 0);
 
   textBuf: TextBuffer.TextBuffer;
   textView: blessed.Widgets.BoxElement;
   program: blessed.BlessedProgram;
+
+  get isBusy() {
+    return this.isSaving || this.isLoading;
+  }
 
   constructor(program: blessed.BlessedProgram, options: TextEditorOptions) {
     this.textBuf = new TextBuffer();
@@ -63,21 +69,26 @@ class TextEditor {
 
   @reactionMethod(() => appStore.currentEditingCache)
   reloadContent() {
-    if (!appStore.currentEditingCache) return;
-    this.resetCursorPosition();
+    if (!appStore.currentEditingCache || this.isBusy) return;
+    this.isLoading = true;
     this.textBuf.setPath(appStore.currentEditingCache);
     this.textBuf.reload();
   }
 
   @boundMethod
   onDidReload() {
-    this.textView.setContent(this.textBuf.getText());
-    this.cursorPosition = new Point(0, 0);
+    this.resetCursorPosition();
+    this.resetScrollAmount();
+    this.updateContent();
+    this.applyCursorPos(this.cursorPosition);
     this.textView.screen.render();
+    this.isLoading = false;
   }
 
   @boundMethod
   onKeypress(ch?: string, key?: Key) {
+    if (this.isBusy) return;
+
     if (key?.name === 'escape') {
       this.save();
       uiStore.setUIState('SELECT_NOTE');
@@ -124,9 +135,17 @@ class TextEditor {
   }
 
   updateContent() {
-    const startLine = new Point(this.scrollAmount.row, 0);
-    const endLine = new Point(this.scrollAmount.row + this.viewRowSize, 0);
-    this.textView.setContent(this.textBuf.getTextInRange(new Range(startLine, endLine)));
+    const startRow = this.scrollAmount.row;
+    const startPos = new Point(startRow, 0);
+    const endRow = this.scrollAmount.row + this.viewRowSize;
+    const endPos = new Point(endRow, this.textBuf.lineLengthForRow(endRow));
+    const bufferContent = this.textBuf.getTextInRange(new Range(startPos, endPos));
+    const renderContent = [];
+    const maxColumn = this.viewColumnSize;
+    for (const line of bufferContent.split('\n')) {
+      renderContent.push(substrProperWidth(line, maxColumn));
+    }
+    this.textView.setContent(renderContent.join('\n'));
   }
 }
 
