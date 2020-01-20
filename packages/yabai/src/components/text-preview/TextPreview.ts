@@ -27,7 +27,7 @@ class TextPreview {
     this.textView.hide();
   }
 
-  @reactionMethod(() => [appStore.isInitialized, appStore.currentDocument])
+  @reactionMethod(() => [appStore.isInitialized, appStore.currentDocument?.content])
   setContent() {
     this.textView.setContent(appStore.currentDocument?.content || '');
     this.textView.screen.render();

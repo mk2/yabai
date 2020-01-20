@@ -75,7 +75,7 @@ class AppStore {
             document.id = file;
             return document;
           } catch (e) {
-            this.logger.error(`File: ${file}`);
+            this.logger.error(`File: ${file} Error: ${e.toString()}`);
             throw e;
           }
         }),
@@ -138,17 +138,15 @@ class AppStore {
 
   @actionAsync
   async setCurrentDocumentContent(content: string) {
-    if (!this._currentDocumentId || !this.currentDocument) return;
-    this.currentDocument.content = content;
-    this.currentDocument.updatedAt = DateTime.utc().toISO();
+    const documentId = this._currentDocumentId;
+    const document = this._documents?.find(document => document.id === documentId);
+    if (!document) return;
+    document.content = content;
+    document.updatedAt = DateTime.utc().toISO();
     await task(
-      fs.writeFile(
-        path.resolve(config.notesDirPath, `${this._currentDocumentId}`),
-        CSON.stringify(this.currentDocument, null, 2),
-        {
-          encoding: 'utf8',
-        },
-      ),
+      fs.writeFile(path.resolve(config.notesDirPath, `${documentId}`), CSON.stringify(document, null, 2), {
+        encoding: 'utf8',
+      }),
     );
   }
 
