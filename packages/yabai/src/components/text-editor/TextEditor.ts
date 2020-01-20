@@ -1,4 +1,4 @@
-import { substrProperWidth } from '@/helpers/blessed/unicode';
+import { shrinkStrWidth } from '@/helpers/blessed/unicode';
 import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
 import { appStore } from '@/models/AppStore';
@@ -141,9 +141,10 @@ class TextEditor {
     const endPos = new Point(endRow, this.textBuf.lineLengthForRow(endRow));
     const bufferContent = this.textBuf.getTextInRange(new Range(startPos, endPos));
     const renderContent = [];
-    const maxColumn = this.viewColumnSize;
+    const minColumn = this.scrollAmount.column;
+    const maxColumn = this.scrollAmount.column + this.viewColumnSize;
     for (const line of bufferContent.split('\n')) {
-      renderContent.push(substrProperWidth(line, maxColumn));
+      renderContent.push(shrinkStrWidth(line, maxColumn));
     }
     this.textView.setContent(renderContent.join('\n'));
   }
