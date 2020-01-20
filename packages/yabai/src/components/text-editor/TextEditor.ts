@@ -78,7 +78,9 @@ class TextEditor {
   @boundMethod
   onKeypress(ch?: string, key?: Key) {
     if (key?.name === 'escape') {
-      uiStore.setUIState('SELECT_NOTE');
+      this.save().then(() => {
+        uiStore.setUIState('SELECT_NOTE');
+      });
     } else if (key?.name === 'up') {
       this.updateCursorPosition({ row: -1, column: 0 });
     } else if (key?.name === 'down') {
@@ -93,6 +95,11 @@ class TextEditor {
       this.textView.setContent(this.textBuf.getText());
       this.textView.screen.render();
     }
+  }
+
+  async save() {
+    await this.textBuf.save();
+    await appStore.setCurrentDocumentContent(this.textBuf.getText());
   }
 
   @boundMethod

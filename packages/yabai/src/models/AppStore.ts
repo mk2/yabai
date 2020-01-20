@@ -6,6 +6,7 @@ import applyMixins from '@/helpers/mixin/applyMixins';
 import CSON from 'cson-parser';
 import { DateTime } from 'luxon';
 import { action, computed, observable } from 'mobx';
+import { actionAsync, task } from 'mobx-utils';
 import uuidv4 from 'uuid/v4';
 
 import { config } from './Config';
@@ -45,9 +46,9 @@ class AppStore {
     return this._folders;
   }
 
-  @action.bound
+  @actionAsync
   async loadFolders() {
-    this._folders = JSON.parse(await fs.readFile(config.folderFilePath, { encoding: 'utf8' })).folders;
+    this._folders = JSON.parse(await task(fs.readFile(config.folderFilePath, { encoding: 'utf8' }))).folders;
   }
 
   /**
@@ -62,15 +63,23 @@ class AppStore {
     return this._documents;
   }
 
-  @action.bound
+  @actionAsync
   async loadDocuments() {
-    const files = await fs.readdir(config.notesDirPath);
-    return Promise.all(
-      files.map(async file => {
-        const document = CSON.parse(await fs.readFile(path.resolve(config.notesDirPath, file), { encoding: 'utf8' }));
-        document.id = file;
-        this.documents?.push(document);
-      }),
+    const files = (await task(fs.readdir(config.notesDirPath))).filter(e => !/^\..*/.test(e));
+    this._documents = await task(
+      Promise.all(
+        files.map(async file => {
+          const content = await fs.readFile(path.resolve(config.notesDirPath, file), { encoding: 'utf8' });
+          try {
+            const document = CSON.parse(content);
+            document.id = file;
+            return document;
+          } catch (e) {
+            this.logger.error(`File: ${file}`);
+            throw e;
+          }
+        }),
+      ),
     );
   }
 
@@ -127,6 +136,22 @@ class AppStore {
     this._currentDocumentId = documentId;
   }
 
+  @actionAsync
+  async setCurrentDocumentContent(content: string) {
+    if (!this._currentDocumentId || !this.currentDocument) return;
+    this.currentDocument.content = content;
+    this.currentDocument.updatedAt = DateTime.utc().toISO();
+    await task(
+      fs.writeFile(
+        path.resolve(config.notesDirPath, `${this._currentDocumentId}`),
+        CSON.stringify(this.currentDocument, null, 2),
+        {
+          encoding: 'utf8',
+        },
+      ),
+    );
+  }
+
   /**
    * currentEditingCache
    */
@@ -139,15 +164,16 @@ class AppStore {
     return this._currentEditingCachePath;
   }
 
+  @actionAsync
   async openCurrentEditingCache() {
     const datePrefix = DateTime.utc().toFormat('yyyyMMddHHmmss');
     const uid = uuidv4();
     const cacheFileName = `${datePrefix}-${uid}.md`;
     const currentEditingCachePath = path.resolve(config.cachesDirPath, cacheFileName);
     try {
-      await fs.access(currentEditingCachePath, fsConstants.R_OK | fsConstants.W_OK);
+      await task(fs.access(currentEditingCachePath, fsConstants.R_OK | fsConstants.W_OK));
     } catch (e) {
-      await fs.writeFile(currentEditingCachePath, this.currentDocument?.content, { encoding: 'utf8' });
+      await task(fs.writeFile(currentEditingCachePath, this.currentDocument?.content, { encoding: 'utf8' }));
     }
     this._currentEditingCachePath = currentEditingCachePath;
   }
@@ -176,17 +202,23 @@ class AppStore {
     return this._isInitialized;
   }
 
-  @action.bound
+  @actionAsync
   async init() {
     try {
-      await this.loadFolders();
-      await this.loadDocuments();
+      await task(this.loadFolders());
       this._currentFolderIndex = 0;
-      this._currentDocumentId = this.currentFolderDocuments[0]?.document.id;
-      this._isInitialized = true;
     } catch (e) {
-      this.logger.error(`Error: ${e.toString()}`);
+      this.logger.error(`Error(read folders): ${e.toString()}`);
     }
+
+    try {
+      await task(this.loadDocuments());
+      this._currentDocumentId = this.currentFolderDocuments[0]?.document.id;
+    } catch (e) {
+      this.logger.error(`Error(read documents): ${e.toString()}`);
+    }
+
+    this._isInitialized = true;
   }
 }
 

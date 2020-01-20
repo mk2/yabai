@@ -10,6 +10,7 @@ import { config } from '@/models/Config';
 import { uiStore } from '@/models/UIStore';
 import blessed from 'blessed';
 import { ReactableMixin, reactionMethod } from 'mobx-method-decorators';
+import { actionAsync, task } from 'mobx-utils';
 
 interface App extends LoggableMixin, ReactableMixin {}
 
@@ -35,8 +36,9 @@ class App {
     this.makeReactable();
   }
 
+  @actionAsync
   async init() {
-    await config.init();
+    await task(config.init());
     this.rootScreen.title = 'bce';
 
     this.noteList = new NoteList({
@@ -76,7 +78,7 @@ class App {
     });
     this.noteList.focus();
 
-    appStore.init();
+    await task(appStore.init());
   }
 
   start() {
