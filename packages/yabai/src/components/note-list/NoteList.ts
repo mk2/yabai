@@ -47,6 +47,7 @@ class NoteList {
     this.noteList.key(['up'], this.onUpKeyPressed);
     this.noteList.key(['down'], this.onDownKeyPressed);
     this.noteList.key(['f'], this.onFolderKeyPressed);
+    this.noteList.key(['c'], this.onCKeyPressed);
     this.noteList.on('select', this.onSelect);
     this.makeReactable();
   }
@@ -67,6 +68,12 @@ class NoteList {
     if (appStore.currentShowDocumentIndex < appStore.currentFolderDocuments.length - 1) {
       appStore.setCurrentShowDocumentIndex(appStore.currentShowDocumentIndex + 1);
     }
+  }
+
+  @boundMethod
+  async onCKeyPressed() {
+    await appStore.openNewDocument();
+    uiStore.setUIState('EDIT_NOTE');
   }
 
   @boundMethod

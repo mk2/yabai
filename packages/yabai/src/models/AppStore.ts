@@ -7,6 +7,7 @@ import CSON from 'cson-parser';
 import { DateTime } from 'luxon';
 import { action, computed, observable } from 'mobx';
 import { actionAsync, task } from 'mobx-utils';
+import { SetRequired } from 'type-fest';
 import uuidv4 from 'uuid/v4';
 
 import { config } from './Config';
@@ -30,6 +31,22 @@ type Document = {
   isStarred: boolean;
   isTrashed: boolean;
 };
+
+function createNewDocument(params: SetRequired<Partial<Document>, 'id' | 'folder'>): Document {
+  const now = DateTime.utc().toISO();
+  return {
+    createdAt: now,
+    updatedAt: now,
+    type: 'MARKDOWN_NOTE',
+    title: '',
+    tags: [],
+    content: '',
+    lignesHighlighted: [],
+    isStarred: false,
+    isTrashed: false,
+    ...params,
+  };
+}
 
 interface AppStore extends LoggableMixin {}
 
@@ -174,6 +191,20 @@ class AppStore {
       await task(fs.writeFile(currentEditingCachePath, this.currentDocument?.content, { encoding: 'utf8' }));
     }
     this._currentEditingCachePath = currentEditingCachePath;
+  }
+
+  @actionAsync
+  async openNewDocument() {
+    if (!this.currentFolder?.key) return;
+    const id = `${uuidv4()}.cson`;
+    const document = createNewDocument({
+      id,
+      folder: this.currentFolder?.key,
+    });
+    this._documents.unshift(document);
+    this._currentDocumentId = id;
+    this._currentShowDocumentIndex = 0;
+    await task(this.openCurrentEditingCache());
   }
 
   /**
