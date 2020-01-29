@@ -15,10 +15,12 @@
     "build:types": "tsc --emitDeclarationOnly",
     "clean:js": "rimraf lib dist",
     "clean:log": "rimraf yabai.log",
+    "clean:data": "rimraf data",
     "build:js": "babel src --out-dir lib --extensions \".ts,.js\" --source-maps inline",
     "bundle": "run-s build bundle:js",
     "bundle:js": "webpack",
-    "dev": "run-s clean:log build run",
+    "prepare:data": "cp -R fixtures/data data/",
+    "dev": "BOOSTNOTE_DATA_DIRECTORY=data && run-s clean:* prepare:* build run",
     "test": "jest"
   },
   "dependencies": {

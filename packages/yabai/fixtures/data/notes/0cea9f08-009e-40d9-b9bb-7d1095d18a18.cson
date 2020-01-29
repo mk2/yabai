@@ -1,0 +1,70 @@
+createdAt: '2019-04-10T07:45:07.783Z'
+updatedAt: '2020-01-20T14:59:05.046Z'
+type: 'MARKDOWN_NOTE'
+folder: '08842826ad13a2a00200'
+title: 'Goで、worldclockapiから現在時刻を取得する例'
+tags: [
+  'Go'
+]
+content: '''
+  Goで、worldclockapiから現在時刻を取得する例
+  
+  ```go
+  package main
+  
+  import (
+  	"encoding/json"
+  	"fmt"
+  	"io/ioutil"
+  	"math/rand"
+  	"net/http"
+  	"time"
+  )
+  
+  type WorldClockApiResponse struct {
+  	Id                    string `json:"$id"`
+  	CurrentDateTime       string `json:"currentDateTime"`
+  	UtcOffset             string `json:"utcOffset"`
+  	IsDayLightSavingsTime bool   `json:"isDayLightSavingsTime"`
+  	DayOfTheWeek          string `json:"dayOfTheWeek"`
+  	TimeZoneName          string `json:"timeZoneName"`
+  	CurrentFileTime       int64  `json:"currentFileTime"`
+  	OrdinalDate           string `json:"ordinalDate"`
+  	ServiceResponse       string `json:"serviceResponse"`
+  }
+  
+  func getUnixTime() (int64, error) {
+  	pgTime := time.Now().UnixNano()
+  	reqURL := "http://worldclockapi.com/api/json/utc/now"
+  	res, err := http.Get(reqURL)
+  	if err != nil {
+  		return pgTime, err
+  	}
+  	defer res.Body.Close()
+  	bodyBytes, err := ioutil.ReadAll(res.Body)
+  	if err != nil {
+  		return pgTime, err
+  	}
+  	output := &WorldClockApiResponse{}
+  	err = json.Unmarshal(bodyBytes, output)
+  	return output.CurrentFileTime, err
+  }
+  
+  func main() {
+  	t, err := getUnixTime()
+  	if err != nil {
+  		fmt.Println(err)
+  	}
+  	rand.Seed(t)
+  	if rand.Intn(10)%2 == 0 {
+  		fmt.Println("今日はGo勉強会の日です。")
+  	} else {
+  		fmt.Println("今日はGo勉強会の日ではないです。")
+  	}
+  }
+  ```
+'''
+linesHighlighted: []
+isStarred: false
+isTrashed: false
+id: '0cea9f08-009e-40d9-b9bb-7d1095d18a18.cson'
