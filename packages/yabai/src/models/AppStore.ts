@@ -38,7 +38,7 @@ function createNewDocument(params: SetRequired<Partial<Document>, 'id' | 'folder
     createdAt: now,
     updatedAt: now,
     type: 'MARKDOWN_NOTE',
-    title: '',
+    title: '(untitled)',
     tags: [],
     content: '',
     lignesHighlighted: [],

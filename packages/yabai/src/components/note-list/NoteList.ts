@@ -9,7 +9,7 @@ import { SetRequired } from 'type-fest';
 
 type NoteListOptions = SetRequired<blessed.Widgets.ListOptions<any>, 'parent'>;
 
-const kDefaultNoteListOption: Partial<NoteListOptions> = Object.freeze({
+const kDefaultNoteListOption: Readonly<Partial<NoteListOptions>> = Object.freeze({
   keys: true,
   mouse: false,
   scrollbar: {

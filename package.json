@@ -11,7 +11,8 @@
     "prepare-dist": "node ./scripts/prepare-dist.js",
     "lint": "run-p lint:*",
     "lint:yabai": "eslint -c .eslintrc.js packages/yabai/**/*.ts",
-    "dev": "cd packages/yabai; yarn dev",
+    "boot": "cd packages/yabai; yarn boot",
+    "run-app": "cd packages/yabai; yarn run:app",
     "ut": "cd packages/yabai; yarn test"
   },
   "importSort": {

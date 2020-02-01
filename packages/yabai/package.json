@@ -11,7 +11,7 @@
   "scripts": {
     "type-check": "tsc --noEmit",
     "type-check:watch": "yarn type-check -- --watch",
-    "run": "node lib/main.js",
+    "run:app": "BOOSTNOTE_DATA_DIRECTORY=data && node lib/main.js",
     "clean:js": "rimraf lib dist",
     "clean:log": "rimraf yabai.log",
     "clean:data": "rimraf data",
@@ -20,7 +20,7 @@
     "bundle": "run-s build:* bundle:js",
     "bundle:js": "webpack",
     "prepare:data": "cp -R fixtures/data data/",
-    "dev": "BOOSTNOTE_DATA_DIRECTORY=data && run-s clean:* prepare:* build:js run",
+    "boot": "run-s clean:* prepare:* build:js run:app",
     "test": "jest"
   },
   "dependencies": {
