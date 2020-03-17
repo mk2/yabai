@@ -1,8 +1,8 @@
-import FolderList from '@/components/folder-list/FolderList';
-import NoteList from '@/components/note-list/NoteList';
+import FolderList from '@/components/FolderList';
+import NoteList from '@/components/NoteList';
 import TextEditor from '@/components/text-editor/TextEditor';
-import TextPreview from '@/components/text-preview/TextPreview';
-import TopBar from '@/components/top-bar/TopBar';
+import TextPreview from '@/components/TextPreview';
+import TopBar from '@/components/TopBar';
 import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import applyMixins from '@/helpers/mixin/applyMixins';
 import { appStore } from '@/models/AppStore';
