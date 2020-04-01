@@ -109,8 +109,8 @@ class TextEditor {
       this.updateCursorPosition({ row: 0, column: -1 });
     } else if (key?.name === 'right') {
       this.updateCursorPosition({ row: 0, column: 1 });
-    } else if (key?.ch) {
-      this.textBuf.insert(this.cursorPosition, key.ch);
+    } else if (ch) {
+      this.textBuf.insert(this.cursorPosition, ch);
       this.updateCursorPosition({ row: 0, column: 1 });
     }
 
