@@ -87,7 +87,7 @@ class NoteList {
     uiStore.setUIState('EDIT_NOTE');
   }
 
-  @reactionMethod(() => [appStore.isInitialized, appStore.currentFolder])
+  @reactionMethod(() => [appStore.isInitialized, appStore.currentFolder, uiStore.uiState])
   reloadItems() {
     this.noteList.setItems(appStore.currentFolderDocuments.map(({ document }) => document.title));
     this.noteList.select(appStore.currentShowDocumentIndex);
