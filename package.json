@@ -8,11 +8,11 @@
     "packages/@types/blessed"
   ],
   "scripts": {
+    "start": "cd packages/yabai; yarn start",
+    "clean-start": "cd packages/yabai; yarn clean-start",
     "prepare-dist": "node ./scripts/prepare-dist.js",
     "lint": "run-p lint:*",
     "lint:yabai": "eslint -c .eslintrc.js packages/yabai/**/*.ts",
-    "boot": "cd packages/yabai; yarn boot",
-    "run-app": "cd packages/yabai; yarn run:app",
     "ut": "cd packages/yabai; yarn test"
   },
   "importSort": {

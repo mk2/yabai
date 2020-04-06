@@ -9,9 +9,12 @@
   "author": "",
   "license": "MIT",
   "scripts": {
+    "prepare": "run-s clean:* prepare:* build:js",
+    "prepare:data": "cp -R fixtures/data data/",
+    "start": "BOOSTNOTE_DATA_DIRECTORY=data && node lib/main.js",
+    "clean-start": "run-s prepare start",
     "type-check": "tsc --noEmit",
     "type-check:watch": "yarn type-check -- --watch",
-    "run:app": "BOOSTNOTE_DATA_DIRECTORY=data && node lib/main.js",
     "clean:js": "rimraf lib dist",
     "clean:log": "rimraf yabai.log",
     "clean:data": "rimraf data",
@@ -19,8 +22,6 @@
     "build:types": "tsc --emitDeclarationOnly",
     "bundle": "run-s build:* bundle:js",
     "bundle:js": "webpack",
-    "prepare:data": "cp -R fixtures/data data/",
-    "boot": "run-s clean:* prepare:* build:js run:app",
     "test": "jest"
   },
   "dependencies": {
