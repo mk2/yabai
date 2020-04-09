@@ -1,9 +1,10 @@
-import LoggableMixin from '@/helpers/logger/LoggableMixin';
-import applyMixins from '@/helpers/mixin/applyMixins';
-import { appStore } from '@/models/AppStore';
 import blessed from 'blessed';
 import { reaction } from 'mobx';
 import { ReactableMixin, reactionMethod } from 'mobx-method-decorators';
+
+import LoggableMixin from '@/helpers/logger/LoggableMixin';
+import applyMixins from '@/helpers/mixin/applyMixins';
+import { appStore } from '@/models/AppStore';
 
 type TopBarOptions = {
   parent: blessed.Widgets.Node;

@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  plugins: ['simple-import-sort'],
   ignorePatterns: ['node_modules/', 'packages/publish/', 'packages/@types'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -10,6 +11,9 @@ module.exports = {
   env: {
     node: true,
     es6: true,
+  },
+  rules: {
+    'simple-import-sort/sort': 'error',
   },
   overrides: [
     {

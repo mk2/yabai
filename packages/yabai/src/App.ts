@@ -1,3 +1,7 @@
+import blessed from 'blessed';
+import { ReactableMixin, reactionMethod } from 'mobx-method-decorators';
+import { actionAsync, task } from 'mobx-utils';
+
 import FolderList from '@/components/FolderList';
 import NoteList from '@/components/NoteList';
 import TextEditor from '@/components/text-editor/TextEditor';
@@ -8,9 +12,6 @@ import applyMixins from '@/helpers/mixin/applyMixins';
 import { appStore } from '@/models/AppStore';
 import { config } from '@/models/Config';
 import { uiStore } from '@/models/UIStore';
-import blessed from 'blessed';
-import { ReactableMixin, reactionMethod } from 'mobx-method-decorators';
-import { actionAsync, task } from 'mobx-utils';
 
 interface App extends LoggableMixin, ReactableMixin {}
 

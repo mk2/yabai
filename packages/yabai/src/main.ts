@@ -1,5 +1,6 @@
-import App from '@/App';
 import { configure } from 'mobx';
+
+import App from '@/App';
 
 configure({
   enforceActions: 'observed',

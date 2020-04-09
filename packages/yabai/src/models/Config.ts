@@ -1,4 +1,4 @@
-import { promises as fs, constants as fsConstants } from 'fs';
+import { constants as fsConstants, promises as fs } from 'fs';
 import os from 'os';
 import path from 'path';
 

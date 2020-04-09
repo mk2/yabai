@@ -1,8 +1,9 @@
+import blessed from 'blessed';
+import { Point, Range } from 'text-buffer';
+
 import { calcUnicodeStrWidth } from '@/helpers/blessed/unicode';
 import LoggableMixin from '@/helpers/logger/LoggableMixin';
 import { uiStore } from '@/models/UIStore';
-import blessed from 'blessed';
-import { Point, Range } from 'text-buffer';
 
 interface CursorMovableMixin extends LoggableMixin {
   cursorPosition: Point;

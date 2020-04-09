@@ -1,14 +1,14 @@
-import { promises as fs, constants as fsConstants } from 'fs';
-import path from 'path';
-
-import LoggableMixin from '@/helpers/logger/LoggableMixin';
-import applyMixins from '@/helpers/mixin/applyMixins';
 import CSON from 'cson-parser';
+import { constants as fsConstants, promises as fs } from 'fs';
 import { DateTime } from 'luxon';
 import { action, computed, observable } from 'mobx';
 import { actionAsync, task } from 'mobx-utils';
+import path from 'path';
 import { SetRequired } from 'type-fest';
 import uuidv4 from 'uuid/v4';
+
+import LoggableMixin from '@/helpers/logger/LoggableMixin';
+import applyMixins from '@/helpers/mixin/applyMixins';
 
 import { config } from './Config';
 

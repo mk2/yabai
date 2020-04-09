@@ -1,13 +1,14 @@
-import { shrinkStrWidth } from '@/helpers/blessed/unicode';
-import LoggableMixin from '@/helpers/logger/LoggableMixin';
-import applyMixins from '@/helpers/mixin/applyMixins';
-import { appStore } from '@/models/AppStore';
-import { uiStore } from '@/models/UIStore';
 import { boundMethod } from 'autobind-decorator';
 import blessed from 'blessed';
 import { ReactableMixin, reactionMethod } from 'mobx-method-decorators';
 import TextBuffer, { Point, Range } from 'text-buffer';
 import { SetRequired } from 'type-fest';
+
+import { shrinkStrWidth } from '@/helpers/blessed/unicode';
+import LoggableMixin from '@/helpers/logger/LoggableMixin';
+import applyMixins from '@/helpers/mixin/applyMixins';
+import { appStore } from '@/models/AppStore';
+import { uiStore } from '@/models/UIStore';
 
 import CursorMovableMixin from './CursorMovableMixin';
 
