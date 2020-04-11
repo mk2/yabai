@@ -82,10 +82,10 @@ class AppStore {
 
   @actionAsync
   async loadDocuments() {
-    const files = (await task(fs.readdir(config.notesDirPath))).filter(e => /(\.cson)$/.test(e));
+    const files = (await task(fs.readdir(config.notesDirPath))).filter((e) => /(\.cson)$/.test(e));
     this._documents = await task(
       Promise.all(
-        files.map(async file => {
+        files.map(async (file) => {
           const content = await fs.readFile(path.resolve(config.notesDirPath, file), { encoding: 'utf8' });
           try {
             const document = CSON.parse(content);
@@ -145,7 +145,7 @@ class AppStore {
 
   @computed
   get currentDocument(): Document | undefined {
-    return this.documents?.find(document => document.id === this._currentDocumentId);
+    return this.documents?.find((document) => document.id === this._currentDocumentId);
   }
 
   @action.bound
@@ -156,7 +156,7 @@ class AppStore {
   @actionAsync
   async setCurrentDocumentContent(content: string) {
     const documentId = this._currentDocumentId;
-    const document = this._documents?.find(document => document.id === documentId);
+    const document = this._documents?.find((document) => document.id === documentId);
     if (!document) return;
     document.content = content;
     document.updatedAt = DateTime.utc().toISO();
@@ -215,7 +215,7 @@ class AppStore {
   get currentFolderDocuments(): { document: Document; index: number }[] {
     const currentFolder = this.currentFolder;
     return this.documents
-      .filter(document => !document.isTrashed && document.folder === currentFolder?.key)
+      .filter((document) => !document.isTrashed && document.folder === currentFolder?.key)
       .map((d, i) => ({ document: d, index: i }));
   }
 

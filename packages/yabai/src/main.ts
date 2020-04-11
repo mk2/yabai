@@ -6,7 +6,7 @@ configure({
   enforceActions: 'observed',
 });
 
-(async function() {
+(async function () {
   const app = new App();
   await app.init();
   app.start();

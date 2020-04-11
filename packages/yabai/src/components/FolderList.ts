@@ -74,7 +74,7 @@ class FolderList {
 
   @reactionMethod(() => appStore.isInitialized)
   reloadItems() {
-    this.folderList.setItems(appStore.folders.map(folder => folder.name));
+    this.folderList.setItems(appStore.folders.map((folder) => folder.name));
     this.folderList.select(appStore.currentFolderIndex);
     this.folderList.screen.render();
   }
