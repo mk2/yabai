@@ -15,12 +15,6 @@
     "lint:yabai": "eslint -c .eslintrc.js packages/yabai/**/*.ts",
     "ut": "cd packages/yabai; yarn test"
   },
-  "importSort": {
-    ".js, .ts": {
-      "style": "module",
-      "parser": "typescript"
-    }
-  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
