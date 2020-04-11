@@ -1,0 +1,241 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /Users/mk2/Projects/yabai
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 120
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 32
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 2000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: Yabai
+    style:
+      border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 440
+    content: "\r\nThe default interactive shell is now zsh.\r\nTo update your account to use zsh, please run `chsh -s /bin/zsh`.\r\nFor more details, please visit https://support.apple.com/kb/HT208050.\r\n"
+  - delay: 7
+    content: "\e]7;file://ASAKURA-MBA.local/Users/mk2/Projects/yabai\a\e[?1034hASAKURA-MBA:yabai mk2$ "
+  - delay: 3297
+    content: 'y'
+  - delay: 123
+    content: a
+  - delay: 70
+    content: r
+  - delay: 174
+    content: 'n'
+  - delay: 313
+    content: ' '
+  - delay: 362
+    content: c
+  - delay: 146
+    content: l
+  - delay: 76
+    content: e
+  - delay: 88
+    content: a
+  - delay: 109
+    content: 'n'
+  - delay: 296
+    content: '-'
+  - delay: 274
+    content: s
+  - delay: 229
+    content: t
+  - delay: 108
+    content: a
+  - delay: 97
+    content: r
+  - delay: 197
+    content: t
+  - delay: 171
+    content: "\r\n"
+  - delay: 484
+    content: "\e[2K\e[1G\e[1myarn run v1.13.0\e[22m\r\n"
+  - delay: 62
+    content: "\e[2K\e[1G\e[2m$ cd packages/yabai; yarn clean-start\e[22m\r\n"
+  - delay: 352
+    content: "\e[2K\e[1G\e[2m$ run-s prepare start\e[22m\r\n"
+  - delay: 971
+    content: "\e[2K\e[1G\e[2m$ run-s clean:* prepare:* build:js\e[22m\r\n"
+  - delay: 491
+    content: "\e[2K\e[1G\e[2m$ rimraf lib dist\e[22m\r\n"
+  - delay: 390
+    content: "\e[2K\e[1G\e[2m$ rimraf yabai.log\e[22m\r\n"
+  - delay: 315
+    content: "\e[2K\e[1G\e[2m$ rimraf data\e[22m\r\n"
+  - delay: 318
+    content: "\e[2K\e[1G\e[2m$ cp -R fixtures/data data/\e[22m\r\n"
+  - delay: 275
+    content: "\e[2K\e[1G\e[2m$ babel src --out-dir lib --extensions \".ts,.js\" --source-maps inline\e[22m\r\n"
+  - delay: 4192
+    content: "Successfully compiled 17 files with Babel.\r\n"
+  - delay: 270
+    content: "\e[2K\e[1G\e[2m$ BOOSTNOTE_DATA_DIRECTORY=data && node lib/main.js\e[22m\r\n"
+  - delay: 1055
+    content: "\e[1 q"
+  - delay: 12
+    content: "\e[?1049h\e[?1h\e=\e[1;32r\e[?25l\e[1;1H\e[H\e[2J"
+  - delay: 21
+    content: "\e]0;bce\a"
+  - delay: 60
+    content: "\e7\e[1;1H>>>\e[1C技術メモ\e[2;1H\e[2;25H\e[1;4;35m# Jetbrains系IDEで、fishをIDE内でTerminalとして開いたときにエラーが出る場合\e[m\e[4;1H\e[4;25H\e[34mIntelliJ 組み込みterminalでfish-shellを使う - 今日のつちや (\e[m\e[4;34mhttps://blog.corocn.jp/entry/2018/05\e[m\e[5;1H\e[24C\e[4;34m/06/011547\e[m\e[34m)\e[m\e[7;1H\e[7;27H*\e[1CIDEが用意しているfishの設定をまるっと入れ替える\e[8;1H\e[8;27H*\e[1CShell\e[1CIntegrationを外す手もあるが、terminalの表示の書き換えなどがおかしくなるっぽいので、お\e[9;1H\e[9;25H勧めできない\e[11;1H\e[11;27H\e[33mcd /Applications/IntelliJ\\ IDEA.app/Contents/plugins/terminal/\e[m\e[12;1H\e[12;27H\e[33mmv fish bak.fish\e[m\e[13;1H\e[13;27H\e[33mln -s ~/.config/fish fish\e[m\e8\e7\e[2;1H\e[1;44mJetbrains系IDEで、     \e[12C\e[m\e[1;4;35m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[m\e[3;1H\e[3;1HGASで通知用の簡単な\e[4;1H\e[4;1HGoで、worldclockapiから\e[10C\e[34m組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[m\e8\e7\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m\e[1;4;35m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[m\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[10C\e[34m組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[m\e8\e7\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m\e[1;4;35m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[m\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[10C\e[34m組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[m\e8"
+  - delay: 2045
+    content: "\e[2;25H\e[?12l\e[?25h\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[6C\e[m                                                                           \e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[1C                                                                                                \e[5;1H\e[24C           \e[7;1H\e[7;27H \e[1C                                               \e[8;1H\e[8;27H \e[1C     \e[1C                                                                                     \e[9;1H\e[9;25H            \e[11;1H\e[11;27H                                                              \e[12;1H\e[12;27H                \e[13;1H\e[13;27H                         \e8\e[?12l\e[?25h\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[m\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e8\e[?12l\e[?25h"
+  - delay: 8
+    content: "\e[2;25H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[6C\e[m#\e[1CJetbrains系IDEで、fishをIDE内でTerminalとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[1C[IntelliJ\e[1C組み込みterminalでfish-shellを使う\e[1C-\e[1C今日のつちや](https://blog.corocn.jp/entry/2018/0\e[6;1H\e[24C-\e[1CIDEが用意しているfishの設定をまるっと入れ替える\e[7;1H\e[7;25H-\e[1CShell\e[1CIntegrationを外す手もあるが、terminalの表示の書き換えなどがおかしくなるっぽいので、お勧\e[9;1H\e[9;25H```sh\e[10;1H\e[10;25Hcd\e[1C/Applications/IntelliJ\\\e[1CIDEA.app/Contents/plugins/terminal/\e[11;1H\e[11;25Hmv\e[1Cfish\e[1Cbak.fish\e[12;1H\e[12;25Hln\e[1C-s\e[1C~/.config/fish\e[1Cfish\e[13;1H\e[13;25H```\e8\e[?12l\e[?25h"
+  - delay: 551
+    content: "\e[3;25H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e8\e[?12l\e[?25h"
+  - delay: 451
+    content: "\e[4;25H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e8\e[?12l\e[?25h"
+  - delay: 239
+    content: "\e[5;25H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e8\e[?12l\e[?25h"
+  - delay: 228
+    content: "\e[6;25H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e8\e[?12l\e[?25h"
+  - delay: 215
+    content: "\e[7;25H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e8\e[?12l\e[?25h"
+  - delay: 251
+    content: "\e[8;25H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e8\e[?12l\e[?25h"
+  - delay: 230
+    content: "\e[9;25H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e8\e[?12l\e[?25h"
+  - delay: 191
+    content: "\e[10;25H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e8\e[?12l\e[?25h"
+  - delay: 202
+    content: "\e[11;25H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e8\e[?12l\e[?25h"
+  - delay: 180
+    content: "\e[12;25H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e8\e[?12l\e[?25h"
+  - delay: 203
+    content: "\e[13;25H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e8\e[?12l\e[?25h"
+  - delay: 821
+    content: "\e[14;25H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e8\e[?12l\e[?25h\e[14;25H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e8\e[?12l\e[?25h"
+  - delay: 2696
+    content: "\e[14;27H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e[14;1H\e[14;25H日\e8\e[?12l\e[?25h\e[14;29H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e[14;1H\e[14;25H日本\e8\e[?12l\e[?25h\e[14;31H\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[6;1H\e[6;30Hが用意している\e[4Cの設定をまるっと入れ替える\e[7;1H\e[7;44Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お勧\e[14;1H\e[14;25H日本語\e8\e[?12l\e[?25h"
+  - delay: 1138
+    content: "\e[?25l\e7\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[6C\e[m\e[1;4;35m# Jetbrains系IDEで、fishをIDE内でTerminalとして開いたときにエラーが出る場合\e[m\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[1C\e[34mIntelliJ 組み込みterminalでfish-shellを使う - 今日のつちや (\e[m\e[4;34mhttps://blog.corocn.jp/entry/2018/05\e[m\e[5;1H\e[24C\e[4;34m/06/011547\e[m\e[34m)\e[m\e[6;1H\e[6;25H \e[1C                                               \e[7;1H\e[7;25H \e[1C* IDEが用意しているfishの設定をまるっと入れ替える                                            \e[8;1H\e[8;27H*\e[1CShell\e[1CIntegrationを外す手もあるが、terminalの表示の書き換えなどがおかしくなるっぽいので、お\e[9;1H\e[9;25H勧めできない\e[10;1H\e[10;25H  \e[1C                       \e[1C                                   \e[11;1H\e[11;25H  \e[33mcd /Applications/IntelliJ\\ IDEA.app/Contents/plugins/terminal/\e[m\e[12;1H\e[12;25H  \e[33mmv fish bak.fish\e[m  \e[1C    \e[13;1H\e[13;25H  \e[33mln -s ~/.config/fish fish\e[m\e[14;1H\e[14;25H      \e8\e7\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m\e[1;4;35m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[m\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[10C\e[34m組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[m\e8\e7\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m\e[1;4;35m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[m\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[10C\e[34m組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[m\e8"
+  - delay: 8
+    content: "\e7\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[17C\e[m\e[1;4;35m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[m\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[10C\e[34m組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[m\e[7;1H\e[7;32Hが用意している\e[4Cの設定をまるっと入れ替える\e[8;1H\e[8;46Hを外す手もあるが、\e[8Cの表示の書き換えなどがおかしくなるっぽいので、お\e[9;1H\e[9;25H勧めできない\e[15;1H\e[15;25H日本語\e8"
+  - delay: 1463
+    content: "\e[14;31H\e[?12l\e[?25h\e7\e[?25l\e[2;1H\e[9C\e[1;44m系\e[3Cで、\e[6C\e[m# Jetbrains系IDEで、fishをIDE内でTerminalとして開いたときにエラーが出る場合\e[3;1H\e[3;4Hで通知用の簡単な\e[4;1H\e[4;3Hで、\e[13Cから\e[1C[IntelliJ 組み込みterminalでfish-shellを使う - 今日のつちや](https://blog.corocn.jp/entry/2018/0\e[5;1H\e[24C           \e[6;1H\e[6;25H-\e[1CIDEが用意しているfishの設定をまるっと入れ替える\e[7;1H\e[7;25H-\e[1CShell Integrationを外す手もあるが、terminalの表示の書き換えなどがおかしくなるっぽいので、お勧\e[8;1H\e[8;27H \e[1C     \e[1C                                                                                     \e[9;1H\e[9;25H```sh       \e[10;1H\e[10;25Hcd\e[1C/Applications/IntelliJ\\\e[1CIDEA.app/Contents/plugins/terminal/\e[11;1H\e[11;25Hmv fish bak.fish                                                \e[12;1H\e[12;25Hln -s ~/.config/fish\e[1Cfish\e[13;1H\e[13;25H```                        \e[14;1H\e[14;25H日本語\e[15;1H\e[15;25H      \e8\e[?12l\e[?25h\e7\e[?25l\e[2;1H\e[1;44m(untitled)        \e[17C\e[m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[3;1H\e[3;1HJetbrains系IDEで、 \e[4;1H\e[4;2HASで通知用の簡単な    \e[11C組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[5;1H\e[5;1HGoで、worldclockapiから\e8\e[?12l\e[?25h"
+  - delay: 6
+    content: "\e[2;25H\e7\e[?25l\e[2;1H\e[24C \e[1C                                                                         \e[3;1H\e[3;10H系\e[3Cで、\e[4;1H\e[4;4Hで通知用の簡単な\e[5C         \e[1C                                  \e[1C \e[1C                                                 \e[5;1H\e[2Cで、\e[13Cから\e[6;1H\e[6;25H \e[1C                                               \e[7;1H\e[7;25H \e[1C     \e[1C                                                                                       \e[9;1H\e[9;25H     \e[10;1H\e[10;25H  \e[1C                       \e[1C                                   \e[11;1H\e[11;25H  \e[1C    \e[1C        \e[12;1H\e[12;25H  \e[1C  \e[1C              \e[1C    \e[13;1H\e[13;25H   \e[14;1H\e[14;25H      \e8\e[?12l\e[?25h"
+  - delay: 3956
+    content: "\e[2;27H\e7\e[?25l\e[2;1H\e[24C新\e[3;1H\e[3;10H系\e[3Cで、\e[4;1H\e[4;4Hで通知用の簡単な\e[5;1H\e[5;3Hで、\e[13Cから\e8\e[?12l\e[?25h\e[2;29H\e7\e[?25l\e[2;1H\e[24C新し\e[3;1H\e[3;10H系\e[3Cで、\e[4;1H\e[4;4Hで通知用の簡単な\e[5;1H\e[5;3Hで、\e[13Cから\e8\e[?12l\e[?25h\e[2;31H\e7\e[?25l\e[2;1H\e[24C新しい\e[3;1H\e[3;10H系\e[3Cで、\e[4;1H\e[4;4Hで通知用の簡単な\e[5;1H\e[5;3Hで、\e[13Cから\e8\e[?12l\e[?25h\e[2;33H\e7\e[?25l\e[2;1H\e[24C新しいメ\e[3;1H\e[3;10H系\e[3Cで、\e[4;1H\e[4;4Hで通知用の簡単な\e[5;1H\e[5;3Hで、\e[13Cから\e8\e[?12l\e[?25h\e[2;35H\e7\e[?25l\e[2;1H\e[24C新しいメモ\e[3;1H\e[3;10H系\e[3Cで、\e[4;1H\e[4;4Hで通知用の簡単な\e[5;1H\e[5;3Hで、\e[13Cから\e8\e[?12l\e[?25h"
+  - delay: 594
+    content: "\e[?25l\e7\e[2;1H\e[24C\e[1;4;35m# Jetbrains系IDEで、fishをIDE内でTerminalとして開いたときにエラーが出る場合\e[m\e[3;1H\e[3;10H系\e[3Cで、\e[4;1H\e[4;4Hで通知用の簡単な\e[5C\e[34mIntelliJ 組み込みterminalでfish-shellを使う - 今日のつちや (\e[m\e[4;34mhttps://blog.corocn.jp/entry/2018/05\e[m\e[5;1H\e[2Cで、\e[13Cから\e[1C\e[4;34m/06/011547\e[m\e[34m)\e[m\e[7;1H\e[7;27H*\e[1CIDEが用意しているfishの設定をまるっと入れ替える\e[8;1H\e[8;27H*\e[1CShell\e[1CIntegrationを外す手もあるが、terminalの表示の書き換えなどがおかしくなるっぽいので、お\e[9;1H\e[9;25H勧めできない\e[11;1H\e[11;27H\e[33mcd /Applications/IntelliJ\\ IDEA.app/Contents/plugins/terminal/\e[m\e[12;1H\e[12;27H\e[33mmv fish bak.fish\e[m\e[13;1H\e[13;27H\e[33mln -s ~/.config/fish fish\e[m\e[15;1H\e[15;25H日本語\e8\e7\e[2;1H\e[35C\e[1;4;35m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[m\e[3;1H\e[3;10H系\e[3Cで、\e[4;1H\e[4;4Hで通知用の簡単な\e[14C\e[34m組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[m\e[5;1H\e[5;3Hで、\e[13Cから\e8\e7\e[2;1H\e[35C\e[1;4;35m系\e[3Cで、\e[4Cを\e[3C内で\e[8Cとして開いたときにエラーが出る場合\e[m\e[3;1H\e[3;10H系\e[3Cで、\e[4;1H\e[4;4Hで通知用の簡単な\e[14C\e[34m組み込み\e[8Cで\e[10Cを使う\e[3C今日のつちや\e[m\e[5;1H\e[5;3Hで、\e[13Cから\e8"
+  - delay: 8
+    content: "\e7\e[2;1H\e[24C新しいメモ                                                                 \e[3;1H\e[3;10H系\e[3Cで、\e[4;1H\e[4;4Hで通知用の簡単な\e[5C                                                                                                \e[5;1H\e[2Cで、\e[13Cから\e[1C           \e[7;1H\e[7;27H \e[1C                                               \e[8;1H\e[8;27H \e[1C     \e[1C                                                                                     \e[9;1H\e[9;25H            \e[11;1H\e[11;27H                                                              \e[12;1H\e[12;27H                \e[13;1H\e[13;27H                         \e[15;1H\e[15;25H      \e8"
+  - delay: 2013
+    content: "\e[0 q\e]112\a\e]12;white\a\e[?1l\e>\e[?12l\e[?25h\e[H\e[2J\e[?1049l"
+  - delay: 50
+    content: "\e[2K\e[1G✨  Done in 26.54s.\r\n"
+  - delay: 18
+    content: "\e]7;file://ASAKURA-MBA.local/Users/mk2/Projects/yabai\aASAKURA-MBA:yabai mk2$ "
+  - delay: 2236
+    content: "logout\r\nSaving session..."
+  - delay: 18
+    content: "\r\n...copying shared history...\r\n...saving history..."
+  - delay: 11
+    content: "truncating history files...\r\n...completed.\r\n"
+  - delay: 18
+    content: Deleting expired sessions...
+  - delay: 7
+    content: "4 completed.\r\n"

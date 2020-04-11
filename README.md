@@ -5,4 +5,4 @@
 
 ## image
 
-![](./docs/app_screenshot.png)
+![](./docs/terminalizer_2020_0411.gif)
