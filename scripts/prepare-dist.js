@@ -17,7 +17,7 @@ rimraf.sync(path.resolve(rootDir, 'packages', 'publish'));
 fs.mkdirSync(path.resolve(rootDir, 'packages', 'publish'));
 
 // copy need files
-for (const file of ['yabai.js', 'fs_admin.node', 'pathwatcher.node', 'pty.node', 'superstring.node']) {
+for (const file of ['yabai.js', 'fs_admin.node', 'pathwatcher.node', 'superstring.node']) {
   fs.copyFileSync(
     path.resolve(rootDir, 'packages', 'yabai', 'dist', file),
     path.resolve(rootDir, 'packages', 'publish', file),

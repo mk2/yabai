@@ -35,25 +35,25 @@ widget.classes = [
   'Log',
   'Table',
   'ListTable',
-  'Terminal',
+  // 'Terminal',
   'Image',
   'ANSIImage',
   'OverlayImage',
-  'Video',
-  'Layout'
+  // 'Video',
+  'Layout',
 ];
 
-widget.classes.forEach(function(name) {
+widget.classes.forEach(function (name) {
   var file = name.toLowerCase();
   widget[name] = widget[file] = require('./widgets/' + file);
 });
 
 widget.aliases = {
-  'ListBar': 'Listbar',
-  'PNG': 'ANSIImage'
+  ListBar: 'Listbar',
+  PNG: 'ANSIImage',
 };
 
-Object.keys(widget.aliases).forEach(function(key) {
+Object.keys(widget.aliases).forEach(function (key) {
   var name = widget.aliases[key];
   widget[key] = widget[name];
   widget[key.toLowerCase()] = widget[name];
