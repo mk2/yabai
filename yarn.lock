@@ -5334,10 +5334,10 @@ mobx-method-decorators@^0.0.4:
   dependencies:
     type-fest "^0.8.1"
 
-mobx-utils@^5.5.3:
-  version "5.5.3"
-  resolved "https://registry.yarnpkg.com/mobx-utils/-/mobx-utils-5.5.3.tgz#8649dce7cfcdb98bf76a729ed2339882cb45e134"
-  integrity sha512-tCj3WLHp3y2/OZADAg9KHGtJNNwwEa8ZY92E6dnVuDoV2OaTV+e2N4S23ogsoxJ72ZhFJhNPcy7ppPJRb1Emhg==
+mobx-utils@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/mobx-utils/-/mobx-utils-6.0.1.tgz#bc16c2c62794a48498685f3663e6162d42fb6106"
+  integrity sha512-0p5xqHDt/arz3cswVcEHYKY/BwL+fifsNroT3Gjkz9lNC7ZDsJm3IuGsmYlvFcVRJRr1rwlFZGuZXrt/MhHEJQ==
 
 mobx@^5.15.1:
   version "5.15.1"
