@@ -1432,17 +1432,25 @@
     "@types/event-kit" "*"
     "@types/node" "*"
 
+"@types/pino-pretty@*":
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/@types/pino-pretty/-/pino-pretty-4.7.1.tgz#2ce3f56f3cf4f9632374419d616ae2e6c933b935"
+  integrity sha512-l1ntNXdpVWsnPYUk5HyO5Lxfr38zLCgxVfEn/9Zhhm+nGF04/BiIou/m8XPwvoVZLV+livUo79VdHXMJPfUYxA==
+  dependencies:
+    "@types/pino" "*"
+
 "@types/pino-std-serializers@*":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@types/pino-std-serializers/-/pino-std-serializers-2.4.0.tgz#8cad99175cb79c2448f7455a2d32fb3fde29579c"
   integrity sha512-eAdu+NW1IkCdmp85SnhyKha+OOREQMT9lXaoICQxa7bhSauRiLzu3WSNt9Mf2piuJvWeXF/G0hGWHr63xNpIRA==
 
-"@types/pino@^5.15.0":
-  version "5.15.0"
-  resolved "https://registry.yarnpkg.com/@types/pino/-/pino-5.15.0.tgz#54803ec40a5881ce9ec77185ff718549a456364e"
-  integrity sha512-sf4mu6BP6+2QV6W+cQYKimQdx3N++J15i2soACDs7UV25AS+1EqJpTQVGL5KN9uVRSLw/v7kkZ0zlLgxRt1UnA==
+"@types/pino@*", "@types/pino@^6.3.10":
+  version "6.3.10"
+  resolved "https://registry.yarnpkg.com/@types/pino/-/pino-6.3.10.tgz#bbcd4be930b0dc65168d080e6acc211905dca2da"
+  integrity sha512-r2ZOSQmjDGDEus+mif6Aym7cKQdgATv6P09iBwxlh9UdTWHUzHWbr8HxC0fwqYjAicfe2UzP+ahjm1KdbwA4GA==
   dependencies:
     "@types/node" "*"
+    "@types/pino-pretty" "*"
     "@types/pino-std-serializers" "*"
     "@types/sonic-boom" "*"
 
