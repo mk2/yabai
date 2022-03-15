@@ -28,7 +28,7 @@
     "autobind-decorator": "^2.4.0",
     "blessed": "*",
     "cson-parser": "https://github.com/mk2/cson-parser.git#master",
-    "lodash-es": "^4.17.15",
+    "lodash-es": "^4.17.21",
     "luxon": "^1",
     "marked": "^0.8.0",
     "marked-terminal": "^4.0.0",
