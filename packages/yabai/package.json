@@ -29,7 +29,7 @@
     "blessed": "*",
     "cson-parser": "https://github.com/mk2/cson-parser.git#master",
     "lodash-es": "^4.17.15",
-    "luxon": "^1",
+    "luxon": "^2",
     "marked": "^0.8.0",
     "marked-terminal": "^4.0.0",
     "mobx": "^5.15.1",
